@@ -2,7 +2,6 @@ package com.example.geekbrainstranslator.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.example.geekbrainstranslator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,9 +13,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
                 .add(binding.container.id, MainTranslationFragment.newInstance())
                 .commit()
+        }
     }
 }
