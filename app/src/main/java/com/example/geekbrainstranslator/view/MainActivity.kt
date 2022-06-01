@@ -1,12 +1,22 @@
 package com.example.geekbrainstranslator.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.geekbrainstranslator.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.geekbrainstranslator.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+            supportFragmentManager
+                .beginTransaction()
+                .add(binding.container.id, MainTranslationFragment.newInstance())
+                .commit()
     }
 }
