@@ -11,10 +11,12 @@ class MainTranslationRvAdapter : RecyclerView.Adapter<MainTranslationViewHolder>
     private val data = mutableListOf<Translation?>()
 
     fun setData(resultData: List<TranslateDTO>) {
+        data.clear()
+        notifyDataSetChanged()
         resultData.forEach { translateDTO ->
             translateDTO.meanings?.forEach { meaning ->
                 data.add(meaning.translation)
-                notifyItemRangeChanged(0, data.lastIndex)
+                notifyDataSetChanged()
             }
         }
     }
