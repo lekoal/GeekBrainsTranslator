@@ -8,11 +8,11 @@ import com.example.geekbrainstranslator.data.entity.TranslateDTO
 import com.example.geekbrainstranslator.data.entity.Translation
 
 class MainTranslationRvAdapter : RecyclerView.Adapter<MainTranslationViewHolder>() {
-    private val data = mutableListOf<Translation>()
+    private val data = mutableListOf<Translation?>()
 
     fun setData(resultData: List<TranslateDTO>) {
         resultData.forEach { translateDTO ->
-            translateDTO.meanings.forEach { meaning ->
+            translateDTO.meanings?.forEach { meaning ->
                 data.add(meaning.translation)
                 notifyItemRangeChanged(0, data.lastIndex)
             }
@@ -29,7 +29,7 @@ class MainTranslationRvAdapter : RecyclerView.Adapter<MainTranslationViewHolder>
         holder.bind(getItem(position))
     }
 
-    private fun getItem(position: Int): Translation = data[position]
+    private fun getItem(position: Int): Translation? = data[position]
 
     override fun getItemCount(): Int = data.size
 }
