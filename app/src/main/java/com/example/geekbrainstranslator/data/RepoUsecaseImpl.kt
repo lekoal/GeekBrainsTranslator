@@ -1,6 +1,5 @@
 package com.example.geekbrainstranslator.data
 
-import android.util.Log
 import com.example.geekbrainstranslator.data.entity.TranslateDTO
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.domain.SkyengApi
@@ -21,7 +20,6 @@ class RepoUsecaseImpl : RepositoryUsecase {
     private val api: SkyengApi = retrofit.create(SkyengApi::class.java)
 
     override fun receive(word: String): Observable<List<TranslateDTO>> {
-        Log.i("MYTAG", api.toString())
         return api.search(word)
     }
 }

@@ -12,9 +12,8 @@ class MainTranslationRvAdapter : RecyclerView.Adapter<MainTranslationViewHolder>
 
     fun setData(resultData: List<TranslateDTO>) {
         data.clear()
-        notifyDataSetChanged()
         resultData.forEach { translateDTO ->
-            translateDTO.meanings?.forEach { meaning ->
+            translateDTO.meanings?.forEach{ meaning ->
                 data.add(meaning.translation)
                 notifyDataSetChanged()
             }
