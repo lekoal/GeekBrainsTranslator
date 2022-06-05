@@ -13,16 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
-import com.example.geekbrainstranslator.data.entity.TranslateDTO
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
 
 class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
-    MainTranslationContract.ViewPresenter {
+    MainTranslationContract.ViewViewModel {
 
     private var _binding: FragmentMainTranslationBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var presenter: MainTranslationPresenter
 
     private val viewModel by lazy {
         ViewModelProvider(this)[MainTranslationViewModel::class.java]
@@ -46,7 +43,7 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initPrAd()
+        initAdapter()
         initRv()
         onIconClick()
     }
@@ -54,43 +51,32 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     private fun onIconClick() {
         binding.inputTextLayout.setEndIconOnClickListener {
             requireActivity().hideKeyboard()
+            setSearchSuccess()
             if (binding.inputText.text.toString() != "") {
-                presenter.getData(binding.inputText.text.toString())
+                viewModel.onSearch(binding.inputText.text.toString())
             } else {
                 setSearchError("Введите слово для поиска!")
             }
         }
     }
 
-    override fun setSearchSuccess(data: List<TranslateDTO>) {
-//        viewModel.result.observe(requireActivity()) {
-//            adapter.setData(it)
-//        }
-//        viewModel.inProgress.observe(requireActivity()) {
-//            binding.loadingProcessLayout.isVisible = it
-//            binding.searchResultLayout.isVisible = !it
-//            binding.mainTranslationFragmentLayout.isEnabled = !it
-//        }
-        adapter.setData(data)
-    }
-
-    override fun setProcessLoading(isLoading: Boolean) {
-        binding.loadingProcessLayout.isVisible = isLoading
-        binding.mainTranslationFragmentLayout.isEnabled = !isLoading
-    }
-
-    override fun setResultVisibility(isVisible: Boolean) {
-        binding.searchResultLayout.isVisible = isVisible
+    override fun setSearchSuccess() {
+        viewModel.result.observe(requireActivity()) {
+            adapter.setData(it)
+        }
+        viewModel.inProgress.observe(requireActivity()) {
+            binding.loadingProcessLayout.isVisible = it
+            binding.searchResultLayout.isVisible = !it
+            binding.mainTranslationFragmentLayout.isEnabled = !it
+        }
     }
 
     override fun setSearchError(errorText: String) {
         Toast.makeText(requireContext(), errorText, Toast.LENGTH_SHORT).show()
     }
 
-    private fun initPrAd() {
-        presenter = app.presenter
+    private fun initAdapter() {
         adapter = app.adapter
-        presenter.viewAttach(this)
     }
 
     private fun initRv() {
@@ -114,7 +100,6 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
 
     override fun onDestroyView() {
         _binding = null
-        presenter.viewDetach(this)
         super.onDestroyView()
     }
 }

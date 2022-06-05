@@ -22,9 +22,9 @@ interface MainTranslationContract {
         fun getData(word: String)
     }
 
-    interface ViewModel {
-        fun onSearch(word: String)
-        val result: LiveData<List<TranslateDTO>>
-        val inProgress: LiveData<Boolean>
+    abstract class ViewModel : androidx.lifecycle.ViewModel() {
+        abstract fun onSearch(word: String)
+        abstract val result: LiveData<List<TranslateDTO>>
+        abstract val inProgress: LiveData<Boolean>
     }
 }
