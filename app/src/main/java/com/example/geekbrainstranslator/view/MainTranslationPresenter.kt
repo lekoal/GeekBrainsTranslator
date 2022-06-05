@@ -9,37 +9,18 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class MainTranslationPresenter(
     private val repoUsecase: RepositoryUsecase
 ) : MainTranslationContract.Presenter {
-    private var currentView: MainTranslationContract.View? = null
+    private var currentView: MainTranslationContract.ViewPresenter? = null
     private val myCompositeDisposable: CompositeDisposable = CompositeDisposable()
     private val schedulerUI = AndroidSchedulers.mainThread()
     private val schedulerIO = Schedulers.io()
 
-//    private val _result = MutableLiveData<List<TranslateDTO>>()
-//    val result: LiveData<List<TranslateDTO>> = _result
-//
-//    private val _inProgress = MutableLiveData<Boolean>()
-//    val inProgress: LiveData<Boolean> = _inProgress
-
-//    override fun onSearch(word: String) {
-//        _inProgress.postValue(true)
-//        myCompositeDisposable.add(
-//            repoUsecase
-//                .receive(word)
-//                .subscribeBy {
-//                    _inProgress.postValue(false)
-//                    _result.postValue(it)
-//                }
-//        )
-//
-//    }
-
-    override fun viewAttach(view: MainTranslationContract.View) {
+    override fun viewAttach(view: MainTranslationContract.ViewPresenter) {
         if (view != currentView) {
             currentView = view
         }
     }
 
-    override fun viewDetach(view: MainTranslationContract.View) {
+    override fun viewDetach(view: MainTranslationContract.ViewPresenter) {
         if (currentView == view) {
             currentView = null
         }

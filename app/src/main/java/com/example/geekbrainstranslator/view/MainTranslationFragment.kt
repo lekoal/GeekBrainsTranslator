@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
@@ -16,12 +17,16 @@ import com.example.geekbrainstranslator.data.entity.TranslateDTO
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
 
 class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
-    MainTranslationContract.View {
+    MainTranslationContract.ViewPresenter {
 
     private var _binding: FragmentMainTranslationBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var presenter: MainTranslationPresenter
+
+    private val viewModel by lazy {
+        ViewModelProvider(this)[MainTranslationViewModel::class.java]
+    }
 
     private lateinit var adapter: MainTranslationRvAdapter
 
@@ -58,10 +63,10 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     }
 
     override fun setSearchSuccess(data: List<TranslateDTO>) {
-//        presenter.result.observe(requireActivity()) {
+//        viewModel.result.observe(requireActivity()) {
 //            adapter.setData(it)
 //        }
-//        presenter.inProgress.observe(requireActivity()) {
+//        viewModel.inProgress.observe(requireActivity()) {
 //            binding.loadingProcessLayout.isVisible = it
 //            binding.searchResultLayout.isVisible = !it
 //            binding.mainTranslationFragmentLayout.isEnabled = !it
