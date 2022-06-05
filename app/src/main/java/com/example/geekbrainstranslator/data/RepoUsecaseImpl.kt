@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RepoUsecaseImpl : RepositoryUsecase {
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://dictionary.skyeng.ru/api/public/v1/")
+        .baseUrl(BASE_URL)
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
@@ -21,5 +21,9 @@ class RepoUsecaseImpl : RepositoryUsecase {
 
     override fun receive(word: String): Observable<List<TranslateDTO>> {
         return api.search(word)
+    }
+
+    companion object {
+        private const val BASE_URL = "https://dictionary.skyeng.ru/api/public/v1/"
     }
 }

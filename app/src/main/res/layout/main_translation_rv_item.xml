@@ -10,7 +10,8 @@
         android:id="@+id/main_translation_rv_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/light_grey"
+        android:background="@color/dark_grey"
+        android:textColor="@color/light_grey"
         android:paddingVertical="@dimen/main_translation_rv_item_padding"
         tools:text="Пример текста" />
 
