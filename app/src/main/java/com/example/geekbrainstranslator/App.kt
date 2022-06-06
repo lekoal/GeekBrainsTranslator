@@ -14,12 +14,11 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        mainTranslationAppComponent = DaggerMainTranslationAppComponent.builder().build()
+        mainTranslationAppComponent = DaggerMainTranslationAppComponent
+            .builder()
+            .build()
     }
 
-//    val presenter by lazy { MainTranslationPresenter(repoUsecase) }
-//    val adapter by lazy { MainTranslationRvAdapter() }
-//    private val repoUsecase = RepoUsecaseImpl()
     val inputMethodManager by lazy { getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager }
 }
 

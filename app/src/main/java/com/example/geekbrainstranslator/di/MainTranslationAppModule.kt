@@ -33,6 +33,7 @@ class MainTranslationAppModule {
         return retrofit.create(SkyengApi::class.java)
     }
 
+    @AppScope
     @Provides
     fun provideConverterFactory(): Converter.Factory {
         return GsonConverterFactory.create()

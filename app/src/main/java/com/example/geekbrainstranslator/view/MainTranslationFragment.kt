@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
@@ -25,9 +24,10 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     private var _binding: FragmentMainTranslationBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MainTranslationViewModel by viewModels {
-        app.mainTranslationAppComponent.viewModelFactory()
-    }
+    private lateinit var viewModel: MainTranslationViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var adapter: MainTranslationRvAdapter
@@ -52,6 +52,13 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
         super.onViewCreated(view, savedInstanceState)
 
         app.mainTranslationAppComponent.inject(this)
+
+        viewModel = ViewModelProvider(
+            viewModelStore,
+            viewModelFactory
+        )[
+                MainTranslationViewModel::class.java
+        ]
 
         initRv()
         onIconClick()
