@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_translation_fragment_layout_padding">10dp</dimen>
+    <dimen name="main_translation_fragment_margin">10dp</dimen>
+    <dimen name="loading_process_margin">150dp</dimen>
+    <dimen name="main_translation_rv_item_padding">10dp</dimen>
+    <dimen name="main_translation_rv_item_layout_margin">10dp</dimen>
+</resources>

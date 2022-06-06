@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GeekBrainsTranslator</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="word_to_translate_hint">Слово для перевода</string>
+    <string name="word_to_translate_helper_text">Введите слово для перевода</string>
+    <string name="result_textview">Результат поиска</string>
 </resources>
