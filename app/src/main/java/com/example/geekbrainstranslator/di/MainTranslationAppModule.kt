@@ -1,5 +1,6 @@
 package com.example.geekbrainstranslator.di
 
+import androidx.lifecycle.SavedStateHandle
 import com.example.geekbrainstranslator.data.RepoUsecaseImpl
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.domain.SkyengApi
@@ -25,6 +26,12 @@ class MainTranslationAppModule {
     @Provides
     fun provideRepoUsecase(skyengApi: SkyengApi): RepositoryUsecase {
         return RepoUsecaseImpl(skyengApi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSavedStateHandle() : SavedStateHandle {
+        return SavedStateHandle()
     }
 
     @Singleton

@@ -63,6 +63,9 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
                 MainTranslationViewModel::class.java
         ]
 
+        viewModel.onRestore()
+        restoreView()
+
         initRv()
         onIconClick()
     }
@@ -70,8 +73,8 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     private fun onIconClick() {
         binding.inputTextLayout.setEndIconOnClickListener {
             requireActivity().hideKeyboard()
-            setSearchSuccess()
             if (binding.inputText.text.toString() != "") {
+                setSearchSuccess()
                 if (isOnline(requireContext())) {
                     viewModel.onSearch(binding.inputText.text.toString())
                 } else {
@@ -91,6 +94,15 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
             binding.loadingProcessLayout.isVisible = it
             binding.searchResultLayout.isVisible = !it
             binding.mainTranslationFragmentLayout.isEnabled = !it
+        }
+    }
+
+    private fun restoreView() {
+        viewModel.result.observe(requireActivity()) {
+            if (it != null) {
+                binding.searchResultLayout.isVisible = true
+                adapter.setData(it)
+            }
         }
     }
 

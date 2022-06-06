@@ -26,5 +26,6 @@ interface MainTranslationContract {
         abstract fun onSearch(word: String)
         abstract val result: LiveData<List<TranslateDTO>>
         abstract val inProgress: LiveData<Boolean>
+        abstract fun onRestore()
     }
 }
