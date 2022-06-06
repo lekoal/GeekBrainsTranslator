@@ -9,11 +9,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
+import com.example.geekbrainstranslator.domain.RepositoryUsecase
+import com.example.geekbrainstranslator.view.viewmodel.MainTranslationViewModel
+import javax.inject.Inject
 
 class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     MainTranslationContract.ViewViewModel {
@@ -21,11 +25,15 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     private var _binding: FragmentMainTranslationBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[MainTranslationViewModel::class.java]
+    private val viewModel: MainTranslationViewModel by viewModels {
+        app.mainTranslationAppComponent.viewModelFactory()
     }
 
-    private lateinit var adapter: MainTranslationRvAdapter
+    @Inject
+    lateinit var adapter: MainTranslationRvAdapter
+
+    @Inject
+    lateinit var repoUsecase: RepositoryUsecase
 
     companion object {
         fun newInstance() = MainTranslationFragment()
@@ -43,7 +51,8 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initAdapter()
+        app.mainTranslationAppComponent.inject(this)
+
         initRv()
         onIconClick()
     }
@@ -73,10 +82,6 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
 
     override fun setSearchError(errorText: String) {
         Toast.makeText(requireContext(), errorText, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun initAdapter() {
-        adapter = app.adapter
     }
 
     private fun initRv() {
