@@ -87,10 +87,10 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     }
 
     override fun setSearchSuccess() {
-        viewModel.result.observe(requireActivity()) {
+        viewModel.result.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
-        viewModel.inProgress.observe(requireActivity()) {
+        viewModel.inProgress.observe(viewLifecycleOwner) {
             binding.loadingProcessLayout.isVisible = it
             binding.searchResultLayout.isVisible = !it
             binding.mainTranslationFragmentLayout.isEnabled = !it
@@ -98,7 +98,7 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     }
 
     private fun restoreView() {
-        viewModel.result.observe(requireActivity()) {
+        viewModel.result.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.searchResultLayout.isVisible = true
                 adapter.setData(it)
