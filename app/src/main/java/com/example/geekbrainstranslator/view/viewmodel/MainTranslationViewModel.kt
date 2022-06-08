@@ -5,19 +5,27 @@ import androidx.lifecycle.SavedStateHandle
 import com.example.geekbrainstranslator.data.entity.TranslateDTO
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.view.MainTranslationContract
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.kotlin.subscribeBy
+import kotlinx.coroutines.*
 
 class MainTranslationViewModel
 constructor(
     private val repoUsecase: RepositoryUsecase,
     private var handle: SavedStateHandle
 ) : MainTranslationContract.ViewModel() {
-    private val myCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override val result: MutableLiveData<List<TranslateDTO>> = MutableLiveData<List<TranslateDTO>>()
 
     override val inProgress: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    override val onError: MutableLiveData<Throwable> = MutableLiveData()
+
+    private val viewModelCoroutineScope = CoroutineScope(
+        Dispatchers.Main
+                + SupervisorJob()
+                + CoroutineExceptionHandler { _, throwable ->
+            handleError(throwable)
+        }
+    )
 
     override fun onRestore() {
         setQuery()
@@ -31,14 +39,19 @@ constructor(
     }
 
     override fun onSearch(word: String) {
-        inProgress.postValue(true)
-        myCompositeDisposable.add(
+        cancelJob()
+        viewModelCoroutineScope.launch {
+            inProgress.postValue(true)
+            searchLong(word)
+            inProgress.postValue(false)
+        }
+    }
+
+    private suspend fun searchLong(word: String) = withContext(Dispatchers.IO) {
+        result.postValue(
             repoUsecase
-                .receive(word)
-                .subscribeBy {
-                    inProgress.postValue(false)
-                    result.postValue(it)
-                }
+                .receiveAsync(word)
+                .await()
         )
     }
 
@@ -48,7 +61,20 @@ constructor(
         }
     }
 
+    private fun handleError(throwable: Throwable) {
+        onError.postValue(throwable)
+    }
+
+    private fun cancelJob() {
+        viewModelCoroutineScope.coroutineContext.cancelChildren()
+    }
+
     companion object {
         const val HANDLE_KEY = "query"
+    }
+
+    override fun onCleared() {
+        cancelJob()
+        super.onCleared()
     }
 }

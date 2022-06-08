@@ -28,8 +28,6 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
 
     private val viewModel: MainTranslationViewModel by viewModel()
 
-//    private val viewModelFactory: ViewModelProvider.Factory by inject()
-
     private val adapter: MainTranslationRvAdapter by inject()
 
     companion object {
@@ -47,15 +45,6 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        app.mainTranslationAppComponent.inject(this)
-
-//        viewModel = ViewModelProvider(
-//            viewModelStore,
-//            viewModelFactory
-//        )[
-//                MainTranslationViewModel::class.java
-//        ]
 
         viewModel.onRestore()
         restoreView()
@@ -83,6 +72,11 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
     override fun setSearchSuccess() {
         viewModel.result.observe(viewLifecycleOwner) {
             adapter.setData(it)
+        }
+        viewModel.onError.observe(viewLifecycleOwner) {
+            if (it != null) {
+                setSearchError(it.message.toString())
+            }
         }
         viewModel.inProgress.observe(viewLifecycleOwner) {
             binding.loadingProcessLayout.isVisible = it

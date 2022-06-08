@@ -3,9 +3,9 @@ package com.example.geekbrainstranslator.data
 import com.example.geekbrainstranslator.data.entity.TranslateDTO
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.domain.SkyengApi
-import io.reactivex.rxjava3.core.Observable
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RepoUsecaseImpl(
@@ -14,12 +14,12 @@ class RepoUsecaseImpl(
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    override fun receive(word: String): Observable<List<TranslateDTO>> {
-        return api.search(word)
+    override suspend fun receiveAsync(word: String): Deferred<List<TranslateDTO>> {
+        return api.searchAsync(word)
     }
 
     companion object {

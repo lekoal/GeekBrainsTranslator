@@ -1,8 +1,8 @@
 package com.example.geekbrainstranslator.domain
 
 import com.example.geekbrainstranslator.data.entity.TranslateDTO
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.Deferred
 
 interface RepositoryUsecase {
-    fun receive(word: String): Observable<List<TranslateDTO>>
+    suspend fun receiveAsync(word: String): Deferred<List<TranslateDTO>>
 }
