@@ -12,31 +12,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
-import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.view.viewmodel.MainTranslationViewModel
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
+class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
     MainTranslationContract.ViewViewModel {
 
     private var _binding: FragmentMainTranslationBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: MainTranslationViewModel
+    private val viewModel: MainTranslationViewModel by viewModel()
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+//    private val viewModelFactory: ViewModelProvider.Factory by inject()
 
-    @Inject
-    lateinit var adapter: MainTranslationRvAdapter
-
-    @Inject
-    lateinit var repoUsecase: RepositoryUsecase
+    private val adapter: MainTranslationRvAdapter by inject()
 
     companion object {
         fun newInstance() = MainTranslationFragment()
@@ -54,14 +48,14 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        app.mainTranslationAppComponent.inject(this)
+//        app.mainTranslationAppComponent.inject(this)
 
-        viewModel = ViewModelProvider(
-            viewModelStore,
-            viewModelFactory
-        )[
-                MainTranslationViewModel::class.java
-        ]
+//        viewModel = ViewModelProvider(
+//            viewModelStore,
+//            viewModelFactory
+//        )[
+//                MainTranslationViewModel::class.java
+//        ]
 
         viewModel.onRestore()
         restoreView()

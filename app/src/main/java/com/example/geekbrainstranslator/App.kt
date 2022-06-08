@@ -5,18 +5,19 @@ import android.app.Application
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.example.geekbrainstranslator.di.DaggerMainTranslationAppComponent
-import com.example.geekbrainstranslator.di.MainTranslationAppComponent
+import com.example.geekbrainstranslator.di.remoteDataSourceModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class App : Application() {
-    lateinit var mainTranslationAppComponent: MainTranslationAppComponent
 
     override fun onCreate() {
         super.onCreate()
 
-        mainTranslationAppComponent = DaggerMainTranslationAppComponent
-            .builder()
-            .build()
+        startKoin {
+            androidContext(this@App)
+            modules(listOf(remoteDataSourceModule))
+        }
     }
 
     val inputMethodManager by lazy { getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager }

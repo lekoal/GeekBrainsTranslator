@@ -7,10 +7,8 @@ import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.view.MainTranslationContract
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
-import javax.inject.Inject
 
 class MainTranslationViewModel
-@Inject
 constructor(
     private val repoUsecase: RepositoryUsecase,
     private var handle: SavedStateHandle
