@@ -8,18 +8,21 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RepoUsecaseImpl : RepositoryUsecase {
+class RepoUsecaseImpl(
+    private val api: SkyengApi
+) : RepositoryUsecase {
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://dictionary.skyeng.ru/api/public/v1/")
+        .baseUrl(BASE_URL)
         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-
-    private val api: SkyengApi = retrofit.create(SkyengApi::class.java)
-
     override fun receive(word: String): Observable<List<TranslateDTO>> {
         return api.search(word)
+    }
+
+    companion object {
+        private const val BASE_URL = "https://dictionary.skyeng.ru/api/public/v1/"
     }
 }
