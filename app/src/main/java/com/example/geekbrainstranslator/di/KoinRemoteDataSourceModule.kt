@@ -15,18 +15,35 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val remoteDataSourceModule = module {
-    single<MainTranslationRvAdapter> { MainTranslationRvAdapter() }
-    single<SavedStateHandle> { SavedStateHandle() }
-    single<SkyengApi> { get<Retrofit>().create(SkyengApi::class.java) }
-    single<RepositoryUsecase> { RepoUsecaseImpl(get()) }
-    factory<Converter.Factory> { GsonConverterFactory.create() }
-    single<String>(named("base_url")) { "https://dictionary.skyeng.ru/api/public/v1/" }
+    single<MainTranslationRvAdapter>(named("main_adapter")) {
+        MainTranslationRvAdapter()
+    }
+    single<SavedStateHandle>(named("main_save_state_handle")) {
+        SavedStateHandle()
+    }
+    single<SkyengApi>(named("skyeng_api")) {
+        get<Retrofit>().create(SkyengApi::class.java)
+    }
+    single<RepositoryUsecase>(named("repo_usecase")) {
+        RepoUsecaseImpl(get(named("skyeng_api")))
+    }
+    factory<Converter.Factory>(named("gson_converter_factory")) {
+        GsonConverterFactory.create()
+    }
+    single<String>(named("base_url")) {
+        "https://dictionary.skyeng.ru/api/public/v1/"
+    }
     single<Retrofit> {
         Retrofit.Builder()
             .baseUrl(get<String>(named("base_url")))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .addConverterFactory(get())
+            .addConverterFactory(get(named("gson_converter_factory")))
             .build()
     }
-    viewModel { MainTranslationViewModel(get(), get()) }
+    viewModel(named("main_view_model")) {
+        MainTranslationViewModel(
+            get(named("repo_usecase")),
+            get(named("main_save_state_handle"))
+        )
+    }
 }

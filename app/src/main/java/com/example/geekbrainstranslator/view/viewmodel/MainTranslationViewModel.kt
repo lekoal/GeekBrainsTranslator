@@ -19,8 +19,10 @@ constructor(
 
     override val onError: MutableLiveData<Throwable> = MutableLiveData()
 
+    private var job: Job? = null
+
     private val viewModelCoroutineScope = CoroutineScope(
-        Dispatchers.Main
+        Dispatchers.IO
                 + SupervisorJob()
                 + CoroutineExceptionHandler { _, throwable ->
             handleError(throwable)
@@ -39,20 +41,18 @@ constructor(
     }
 
     override fun onSearch(word: String) {
-        cancelJob()
-        viewModelCoroutineScope.launch {
+        if(job != null) {
+            cancelJob()
+        }
+        job = viewModelCoroutineScope.launch {
             inProgress.postValue(true)
-            searchLong(word)
+            result.postValue(
+                repoUsecase
+                    .receiveAsync(word)
+                    .await()
+            )
             inProgress.postValue(false)
         }
-    }
-
-    private suspend fun searchLong(word: String) = withContext(Dispatchers.IO) {
-        result.postValue(
-            repoUsecase
-                .receiveAsync(word)
-                .await()
-        )
     }
 
     private fun setQuery() {
@@ -66,7 +66,7 @@ constructor(
     }
 
     private fun cancelJob() {
-        viewModelCoroutineScope.coroutineContext.cancelChildren()
+        job?.cancel()
     }
 
     companion object {
@@ -74,7 +74,7 @@ constructor(
     }
 
     override fun onCleared() {
-        cancelJob()
+        viewModelCoroutineScope.cancel()
         super.onCleared()
     }
 }
