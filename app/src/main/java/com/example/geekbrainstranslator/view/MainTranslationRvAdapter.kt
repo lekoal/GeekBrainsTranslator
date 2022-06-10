@@ -6,13 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.data.entity.TranslateDTO
 import com.example.geekbrainstranslator.data.entity.Translation
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class MainTranslationRvAdapter
-    @Inject
-    constructor(): RecyclerView.Adapter<MainTranslationViewHolder>() {
+class MainTranslationRvAdapter : RecyclerView.Adapter<MainTranslationViewHolder>() {
     private val data = mutableListOf<Translation?>()
 
     fun setData(resultData: List<TranslateDTO>) {

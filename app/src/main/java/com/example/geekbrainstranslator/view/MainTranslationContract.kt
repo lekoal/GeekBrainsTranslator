@@ -1,6 +1,7 @@
 package com.example.geekbrainstranslator.view
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.geekbrainstranslator.data.entity.TranslateDTO
 
 interface MainTranslationContract {
@@ -26,6 +27,7 @@ interface MainTranslationContract {
         abstract fun onSearch(word: String)
         abstract val result: LiveData<List<TranslateDTO>>
         abstract val inProgress: LiveData<Boolean>
+        abstract val onError: MutableLiveData<Throwable>
         abstract fun onRestore()
     }
 }
