@@ -19,6 +19,7 @@ import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBindi
 import com.example.geekbrainstranslator.view.viewmodel.MainTranslationViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
 
 class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
     MainTranslationContract.ViewViewModel {
@@ -26,9 +27,9 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
     private var _binding: FragmentMainTranslationBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MainTranslationViewModel by viewModel()
+    private val viewModel: MainTranslationViewModel by viewModel(named("main_view_model"))
 
-    private val adapter: MainTranslationRvAdapter by inject()
+    private val adapter: MainTranslationRvAdapter by inject(named("main_adapter"))
 
     companion object {
         fun newInstance() = MainTranslationFragment()

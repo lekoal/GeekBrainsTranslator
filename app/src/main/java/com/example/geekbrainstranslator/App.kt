@@ -16,11 +16,13 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(listOf(remoteDataSourceModule))
+            modules(remoteDataSourceModule)
         }
     }
 
-    val inputMethodManager by lazy { getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager }
+    val inputMethodManager by lazy {
+        getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    }
 }
 
 val Context.app: App
