@@ -13,13 +13,20 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
+import com.example.geekbrainstranslator.data.entity.db.WordData
+import com.example.geekbrainstranslator.data.entity.db.dao.SearchHistoryDao
+import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
-class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
+class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     MainTranslationContract.ViewViewModel {
 
     private var _binding: FragmentMainTranslationBinding? = null
@@ -28,6 +35,8 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
     private val viewModel: MainTranslationViewModel by viewModel(named("main_view_model"))
 
     private val adapter: MainTranslationRvAdapter by inject(named("main_adapter"))
+
+    private val historyDao: SearchHistoryDao by inject(named("history_dao"))
 
     companion object {
         fun newInstance() = MainTranslationFragment()
@@ -97,6 +106,7 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
     override fun setSearchSuccess() {
         viewModel.result.observe(viewLifecycleOwner) {
             adapter.setData(it)
+            dataConverter(it)
         }
         viewModel.onError.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -107,6 +117,41 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
             binding.loadingProcessLayout.isVisible = it
             binding.searchResultLayout.isVisible = !it
             binding.mainTranslationFragmentLayout.isEnabled = !it
+        }
+    }
+
+    private fun dataConverter(originalData: List<TranslateDTO>) {
+        val wordData = mutableListOf<WordData>()
+        val imageList = mutableListOf<String?>()
+        val transcription = mutableListOf<String?>()
+        val translation = mutableListOf<String?>()
+        val partOfSpeech = mutableListOf<String?>()
+
+        val writeDBCoroutineScope = CoroutineScope(
+            Dispatchers.IO
+                    + SupervisorJob()
+        )
+        writeDBCoroutineScope.launch {
+            originalData.forEach { translateDTO ->
+                translateDTO.meanings?.forEach { meaning ->
+                    imageList.add(meaning.imageUrl)
+                    transcription.add(meaning.transcription)
+                    partOfSpeech.add(meaning.partOfSpeechCode)
+                    translation.add(meaning.translation?.text)
+                }
+                wordData.add(
+                    WordData(
+                        id = translateDTO.id,
+                        text = translateDTO.text,
+                        imageUrl = imageList,
+                        transcription = transcription,
+                        translation = translation,
+                        partOfSpeechCode = partOfSpeech
+                    )
+                )
+            }
+            historyDao.historyInsertAll(wordData)
+            Log.i("MY_TAG", historyDao.historyGetAll().toString())
         }
     }
 
