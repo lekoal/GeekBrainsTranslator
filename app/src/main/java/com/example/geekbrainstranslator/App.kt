@@ -5,6 +5,8 @@ import android.app.Application
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.example.geekbrainstranslator.di.koinDataBaseFavoriteModule
+import com.example.geekbrainstranslator.di.koinDataBaseHistoryModule
 import com.example.geekbrainstranslator.di.remoteDataSourceModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -16,7 +18,11 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(remoteDataSourceModule)
+            modules(
+                remoteDataSourceModule,
+                koinDataBaseHistoryModule,
+                koinDataBaseFavoriteModule
+            )
         }
     }
 

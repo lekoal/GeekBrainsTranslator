@@ -6,17 +6,17 @@ import com.example.geekbrainstranslator.data.entity.db.WordData
 @Dao
 interface FavoriteWordsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun favoriteInsert(entity: WordData)
+    fun favoriteInsert(entity: WordData)
 
     @Query("SELECT * FROM WordData")
-    suspend fun favoriteGetAll(): List<WordData>
+    fun favoriteGetAll(): List<WordData>
 
     @Query("SELECT * FROM WordData WHERE text LIKE :word")
-    suspend fun favoriteGetWord(word: String): WordData
+    fun favoriteGetWord(word: String): WordData
 
     @Update
-    suspend fun favoriteUpdate(entity: WordData)
+    fun favoriteUpdate(entity: WordData)
 
     @Delete
-    suspend fun favoriteDeleteWord(entity: WordData)
+    fun favoriteDeleteWord(entity: WordData)
 }

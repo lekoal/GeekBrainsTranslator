@@ -4,4 +4,10 @@
     <string name="word_to_translate_hint">Слово для перевода</string>
     <string name="word_to_translate_helper_text">Введите слово для перевода</string>
     <string name="result_textview">Результат поиска</string>
+    <string name="history_toolbar_title">История поиска</string>
+    <string name="favorite_toolbar_title">Избранное</string>
+    <string name="description_toolbar_title">Подробности</string>
+    <string name="transcription_title">Транскрипция:</string>
+    <string name="translation_title">Перевод:</string>
+    <string name="part_of_speech_title">Использование в тексте:</string>
 </resources>

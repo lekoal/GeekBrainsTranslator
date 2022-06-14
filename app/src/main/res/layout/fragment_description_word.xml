@@ -1,8 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/word_description_fragment_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.description.DescriptionWordFragment">
 
-</FrameLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/description_action_bar"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        android:background="@color/dark_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/description_toolbar_title"
+        app:titleTextColor="@color/white" />
+
+    <LinearLayout
+        android:id="@+id/description_inner_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/inner_views_margin"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description_action_bar">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/entity_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="text" />
+
+        <com.example.geekbrainstranslator.utils.EquilateralImageView
+            android:id="@+id/entity_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/inner_views_margin"
+            tools:src="@drawable/ic_baseline_image_24" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/transcription_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/entity_transcription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="transcription" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/inner_views_margin"
+            android:text="@string/translation_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/entity_translation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="translation" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/inner_views_margin"
+            android:text="@string/part_of_speech_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/entity_part_of_speech_code"
+            tools:text="partOfSpeechCode" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
