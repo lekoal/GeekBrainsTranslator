@@ -1,4 +1,4 @@
-package com.example.geekbrainstranslator.data.entity
+package com.example.geekbrainstranslator.data.entity.web
 
 
 data class TranslateDTO(

@@ -1,4 +1,4 @@
-package com.example.geekbrainstranslator.view
+package com.example.geekbrainstranslator.view.main
 
 import android.app.Activity
 import android.content.Context
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
-import com.example.geekbrainstranslator.view.viewmodel.MainTranslationViewModel
+import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named

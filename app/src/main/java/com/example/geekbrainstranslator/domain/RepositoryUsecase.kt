@@ -1,6 +1,6 @@
 package com.example.geekbrainstranslator.domain
 
-import com.example.geekbrainstranslator.data.entity.TranslateDTO
+import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
 import kotlinx.coroutines.Deferred
 
 interface RepositoryUsecase {

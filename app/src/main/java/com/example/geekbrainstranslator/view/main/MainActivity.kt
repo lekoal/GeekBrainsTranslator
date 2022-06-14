@@ -1,4 +1,4 @@
-package com.example.geekbrainstranslator.view
+package com.example.geekbrainstranslator.view.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

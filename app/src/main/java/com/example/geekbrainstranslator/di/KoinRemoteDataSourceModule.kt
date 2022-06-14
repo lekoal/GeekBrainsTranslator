@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import com.example.geekbrainstranslator.data.RepoUsecaseImpl
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.domain.SkyengApi
-import com.example.geekbrainstranslator.view.MainTranslationRvAdapter
-import com.example.geekbrainstranslator.view.viewmodel.MainTranslationViewModel
+import com.example.geekbrainstranslator.view.main.MainTranslationRvAdapter
+import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named

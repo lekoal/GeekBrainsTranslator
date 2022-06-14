@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/main_translation_fragment_layout_padding"
-    tools:context=".view.MainTranslationFragment">
+    tools:context=".view.main.MainTranslationFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_text_layout"

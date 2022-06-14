@@ -1,6 +1,6 @@
 package com.example.geekbrainstranslator.data
 
-import com.example.geekbrainstranslator.data.entity.TranslateDTO
+import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.domain.SkyengApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
