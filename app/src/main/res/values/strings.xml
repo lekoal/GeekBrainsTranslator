@@ -10,4 +10,7 @@
     <string name="transcription_title">Транскрипция:</string>
     <string name="translation_title">Перевод:</string>
     <string name="part_of_speech_title">Использование в тексте:</string>
+    <string name="open_history_fragment_title">История поиска</string>
+    <string name="open_favorite_fragment_title">Избранное</string>
+    <string name="open_home_fragment_title">Домой</string>
 </resources>

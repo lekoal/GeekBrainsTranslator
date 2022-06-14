@@ -35,47 +35,11 @@
             android:layout_height="wrap_content"
             tools:text="text" />
 
-        <com.example.geekbrainstranslator.utils.EquilateralImageView
-            android:id="@+id/entity_image"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_word_details"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/inner_views_margin"
-            tools:src="@drawable/ic_baseline_image_24" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/transcription_title" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/entity_transcription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="transcription" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/inner_views_margin"
-            android:text="@string/translation_title" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/entity_translation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="translation" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/inner_views_margin"
-            android:text="@string/part_of_speech_title" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/entity_part_of_speech_code"
-            tools:text="partOfSpeechCode" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/word_details_rv_item"/>
 
     </LinearLayout>
 

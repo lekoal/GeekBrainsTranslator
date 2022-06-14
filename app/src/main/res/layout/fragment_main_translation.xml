@@ -12,11 +12,11 @@
         android:layout_width="0dp"
         android:layout_height="?actionBarSize"
         android:background="@color/dark_grey"
-        app:title="@string/app_name"
-        app:titleTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/white" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_text_layout"

@@ -15,11 +15,11 @@ data class WordData(
     @field: ColumnInfo(name = "text")
     val text:String,
     @field: ColumnInfo(name = "imageUrl")
-    val imageUrl: String,
+    val imageUrl: List<String>,
     @field: ColumnInfo(name = "transcription")
-    val transcription: String,
+    val transcription: List<String>,
     @field: ColumnInfo(name = "translation")
-    val translation: String,
+    val translation: List<String>,
     @field: ColumnInfo(name = "partOfSpeechCode")
-    val partOfSpeechCode: String
+    val partOfSpeechCode: List<String>
 )

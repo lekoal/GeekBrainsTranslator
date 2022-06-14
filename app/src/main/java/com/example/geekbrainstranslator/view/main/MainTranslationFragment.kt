@@ -6,9 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -35,6 +33,11 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
         fun newInstance() = MainTranslationFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,14 +47,35 @@ class MainTranslationFragment() : Fragment(R.layout.fragment_main_translation),
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.mainActionBar.inflateMenu(R.menu.main_menu)
         viewModel.onRestore()
         restoreView()
 
         initRv()
         onIconClick()
+
+        toolbarMenuClicker()
+    }
+
+    private fun toolbarMenuClicker() {
+        binding.mainActionBar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.main_favorite_fragment -> {
+                    Toast.makeText(requireContext(), "FAVORITE", Toast.LENGTH_SHORT).show()
+                }
+                R.id.main_history_fragment -> {
+                    Toast.makeText(requireContext(), "HISTORY", Toast.LENGTH_SHORT).show()
+                }
+            }
+            true
+        }
     }
 
     private fun onIconClick() {
