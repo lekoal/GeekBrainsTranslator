@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
+import com.example.geekbrainstranslator.data.entity.db.WordData
 import com.example.geekbrainstranslator.databinding.FragmentSearchStoryWordBinding
 import com.example.geekbrainstranslator.view.story.viewmodel.SearchHistoryViewModel
 import org.koin.android.ext.android.inject
@@ -16,6 +17,8 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
 
     private var _binding: FragmentSearchStoryWordBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var listData: List<WordData>
 
     private val adapter: SearchStoryRvAdapter by inject(
         named("search_history_adapter")
@@ -89,6 +92,7 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
         viewModel.storyList.observe(viewLifecycleOwner) {
             if (!it.isNullOrEmpty()) {
                 adapter.setData(it)
+                listData = it
             }
         }
     }
@@ -96,11 +100,11 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
     private fun setAdapterClicker() {
         adapter.setOnItemClickListener(object : SearchStoryRvAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                Toast.makeText(requireContext(), "Clicked on $position", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Clicked on ${listData[position]}", Toast.LENGTH_SHORT).show()
             }
 
             override fun onLongItemClick(position: Int) {
-                Toast.makeText(requireContext(), "Long Clicked on $position", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Long Clicked on ${listData[position]}", Toast.LENGTH_SHORT).show()
             }
         })
 
