@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.databinding.FragmentSearchStoryWordBinding
 import com.example.geekbrainstranslator.view.story.viewmodel.SearchHistoryViewModel
@@ -55,6 +56,7 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
         toolbarMenuClicker()
         initRv()
         setData()
+        setAdapterClicker()
     }
 
     private fun toolbarMenuClicker() {
@@ -80,6 +82,10 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
         binding.rvHistoryList.adapter = adapter
     }
 
+    private fun onListItemClick() {
+
+    }
+
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
@@ -91,5 +97,18 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
                 adapter.setData(it)
             }
         }
+    }
+
+    private fun setAdapterClicker() {
+        adapter.setOnItemClickListener(object : SearchStoryRvAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int) {
+                Toast.makeText(requireContext(), "Clicked on $position", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onLongItemClick(position: Int) {
+                Toast.makeText(requireContext(), "Long Clicked on $position", Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 }
