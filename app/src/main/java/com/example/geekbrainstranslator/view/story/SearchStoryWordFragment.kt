@@ -1,12 +1,10 @@
 package com.example.geekbrainstranslator.view.story
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.databinding.FragmentSearchStoryWordBinding
 import com.example.geekbrainstranslator.view.story.viewmodel.SearchHistoryViewModel
@@ -80,10 +78,6 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
     private fun initRv() {
         binding.rvHistoryList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvHistoryList.adapter = adapter
-    }
-
-    private fun onListItemClick() {
-
     }
 
     override fun onDestroy() {
