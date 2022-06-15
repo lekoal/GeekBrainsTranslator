@@ -1,8 +1,10 @@
 package com.example.geekbrainstranslator.di
 
 import androidx.room.Room
-import com.example.geekbrainstranslator.data.SearchHistoryDataBase
 import com.example.geekbrainstranslator.data.entity.db.dao.SearchHistoryDao
+import com.example.geekbrainstranslator.data.local.SearchHistoryDataBase
+import com.example.geekbrainstranslator.data.local.SearchHistoryUsecaseImpl
+import com.example.geekbrainstranslator.view.story.SearchStoryRvAdapter
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -20,6 +22,12 @@ val koinDataBaseHistoryModule = module {
             named("search_history_data_base")
         )
             .searchHistoryDao()
+    }
+    single<SearchStoryRvAdapter>(named("search_history_adapter")) {
+        SearchStoryRvAdapter()
+    }
+    single<SearchHistoryUsecaseImpl>(named("history_usecase_impl")) {
+        SearchHistoryUsecaseImpl(get(named("history_dao")))
     }
 
 }

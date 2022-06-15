@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.databinding.FragmentDescriptionWordBinding
-import com.example.geekbrainstranslator.databinding.FragmentFavoriteWordBinding
 
 class DescriptionWordFragment : Fragment() {
 

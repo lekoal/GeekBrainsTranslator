@@ -6,11 +6,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.databinding.FragmentSearchStoryWordBinding
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
-class SearchStoryWordFragment : Fragment() {
+class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
 
     private var _binding: FragmentSearchStoryWordBinding? = null
     private val binding get() = _binding!!
+
+    private val adapter: SearchStoryRvAdapter by inject(named("search_history_adapter"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,5 +62,9 @@ class SearchStoryWordFragment : Fragment() {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    override fun setData() {
+        
     }
 }

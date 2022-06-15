@@ -1,7 +1,7 @@
 package com.example.geekbrainstranslator.di
 
 import androidx.lifecycle.SavedStateHandle
-import com.example.geekbrainstranslator.data.RepoUsecaseImpl
+import com.example.geekbrainstranslator.data.remote.RepoUsecaseImpl
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.domain.SkyengApi
 import com.example.geekbrainstranslator.view.main.MainTranslationRvAdapter

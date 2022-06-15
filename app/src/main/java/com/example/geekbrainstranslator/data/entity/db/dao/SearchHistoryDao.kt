@@ -5,10 +5,10 @@ import com.example.geekbrainstranslator.data.entity.db.WordData
 
 @Dao
 interface SearchHistoryDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun historyInsert(entity: WordData)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun historyInsertAll(entityList: List<WordData>)
 
     @Query("SELECT * FROM WordData")
@@ -22,4 +22,7 @@ interface SearchHistoryDao {
 
     @Delete
     fun historyDelete(entity: WordData)
+
+    @Query("DELETE FROM WordData")
+    fun clearTable()
 }

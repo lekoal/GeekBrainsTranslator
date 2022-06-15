@@ -1,7 +1,7 @@
 package com.example.geekbrainstranslator.di
 
 import androidx.room.Room
-import com.example.geekbrainstranslator.data.FavoriteWordsDataBase
+import com.example.geekbrainstranslator.data.local.FavoriteWordsDataBase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

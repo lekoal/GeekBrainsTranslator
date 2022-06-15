@@ -1,4 +1,4 @@
-package com.example.geekbrainstranslator.data
+package com.example.geekbrainstranslator.data.remote
 
 import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
