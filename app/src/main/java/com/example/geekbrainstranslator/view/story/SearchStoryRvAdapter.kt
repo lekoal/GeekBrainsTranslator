@@ -9,12 +9,22 @@ import com.example.geekbrainstranslator.data.entity.db.WordData
 class SearchStoryRvAdapter : RecyclerView.Adapter<SearchStoryViewHolder>() {
     private val data = mutableListOf<WordData>()
 
-    private fun setData(currentData: List<WordData>) {
+    fun setData(currentData: List<WordData>) {
         data.clear()
         currentData.forEach { wordData ->
             data.add(wordData)
             notifyDataSetChanged()
         }
+    }
+
+    fun clearData() {
+        data.clear()
+        notifyDataSetChanged()
+    }
+
+    fun removeFromHistory(wordData: WordData) {
+        data.remove(wordData)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchStoryViewHolder {

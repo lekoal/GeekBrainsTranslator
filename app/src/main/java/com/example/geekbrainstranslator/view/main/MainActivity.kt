@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(binding.container.id, MainTranslationFragment.newInstance())
+                .add(binding.mainActivityContainer.id, MainTranslationFragment.newInstance())
                 .commit()
         }
     }

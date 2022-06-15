@@ -25,7 +25,7 @@ val remoteDataSourceModule = module {
         get<Retrofit>().create(SkyengApi::class.java)
     }
     single<RepositoryUsecase>(named("repo_usecase")) {
-        RepoUsecaseImpl(get(named("skyeng_api")))
+        RepoUsecaseImpl(get(named("skyeng_api")), get(named("history_dao")))
     }
     factory<Converter.Factory>(named("gson_converter_factory")) {
         GsonConverterFactory.create()

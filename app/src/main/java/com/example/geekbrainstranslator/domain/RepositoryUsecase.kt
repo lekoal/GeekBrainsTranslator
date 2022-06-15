@@ -5,4 +5,5 @@ import kotlinx.coroutines.Deferred
 
 interface RepositoryUsecase {
     suspend fun receiveAsync(word: String): Deferred<List<TranslateDTO>>
+    fun addDataToDB(data: TranslateDTO)
 }

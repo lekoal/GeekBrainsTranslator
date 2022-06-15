@@ -40,6 +40,12 @@ constructor(
         }
     }
 
+    override fun sendDataToDB(data: List<TranslateDTO>) {
+        viewModelCoroutineScope.launch {
+            repoUsecase.addDataToDB(data[0])
+        }
+    }
+
     override fun onSearch(word: String) {
         if(job != null) {
             cancelJob()

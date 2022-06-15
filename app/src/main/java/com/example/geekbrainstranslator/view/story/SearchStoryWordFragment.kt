@@ -1,12 +1,16 @@
 package com.example.geekbrainstranslator.view.story
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.databinding.FragmentSearchStoryWordBinding
+import com.example.geekbrainstranslator.view.story.viewmodel.SearchHistoryViewModel
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
 class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
@@ -14,7 +18,13 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
     private var _binding: FragmentSearchStoryWordBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter: SearchStoryRvAdapter by inject(named("search_history_adapter"))
+    private val adapter: SearchStoryRvAdapter by inject(
+        named("search_history_adapter")
+    )
+
+    private val viewModel: SearchHistoryViewModel by viewModel(
+        named("search_history_view_model")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +51,10 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.historyActionBar.inflateMenu(R.menu.history_menu)
-
+        viewModel.getHistory()
         toolbarMenuClicker()
+        initRv()
+        setData()
     }
 
     private fun toolbarMenuClicker() {
@@ -54,9 +66,18 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
                 R.id.history_home_fragment -> {
                     Toast.makeText(requireContext(), "HOME", Toast.LENGTH_SHORT).show()
                 }
+                R.id.history_clear -> {
+                    viewModel.clearHistory()
+                    adapter.clearData()
+                }
             }
             true
         }
+    }
+
+    private fun initRv() {
+        binding.rvHistoryList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvHistoryList.adapter = adapter
     }
 
     override fun onDestroy() {
@@ -65,6 +86,10 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
     }
 
     override fun setData() {
-        
+        viewModel.storyList.observe(viewLifecycleOwner) {
+            if (!it.isNullOrEmpty()) {
+                adapter.setData(it)
+            }
+        }
     }
 }

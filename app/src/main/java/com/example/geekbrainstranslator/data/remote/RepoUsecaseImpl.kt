@@ -1,5 +1,7 @@
 package com.example.geekbrainstranslator.data.remote
 
+import com.example.geekbrainstranslator.data.entity.db.WordData
+import com.example.geekbrainstranslator.data.entity.db.dao.SearchHistoryDao
 import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.domain.SkyengApi
@@ -9,8 +11,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RepoUsecaseImpl(
-    private val api: SkyengApi
+    private val api: SkyengApi,
+    private val historyDao: SearchHistoryDao
 ) : RepositoryUsecase {
+
+    private val imageList = mutableListOf<String?>()
+    private val transcription = mutableListOf<String?>()
+    private val translation = mutableListOf<String?>()
+    private val partOfSpeech = mutableListOf<String?>()
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -20,6 +28,25 @@ class RepoUsecaseImpl(
 
     override suspend fun receiveAsync(word: String): Deferred<List<TranslateDTO>> {
         return api.searchAsync(word)
+    }
+
+    override fun addDataToDB(data: TranslateDTO) {
+        data.meanings?.forEach { meaning ->
+            imageList.add(meaning.imageUrl)
+            transcription.add(meaning.transcription)
+            partOfSpeech.add(meaning.partOfSpeechCode)
+            translation.add(meaning.translation?.text)
+        }
+        historyDao.historyInsert(
+            WordData(
+                id = data.id,
+                text = data.text,
+                imageUrl = imageList,
+                transcription = transcription,
+                translation = translation,
+                partOfSpeechCode = partOfSpeech
+            )
+        )
     }
 
     companion object {

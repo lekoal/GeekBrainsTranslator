@@ -29,5 +29,6 @@ interface MainTranslationContract {
         abstract val inProgress: LiveData<Boolean>
         abstract val onError: MutableLiveData<Throwable>
         abstract fun onRestore()
+        abstract fun sendDataToDB(data: List<TranslateDTO>)
     }
 }

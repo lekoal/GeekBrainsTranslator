@@ -13,11 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
-import com.example.geekbrainstranslator.data.local.SearchHistoryUsecaseImpl
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.cancel
+import com.example.geekbrainstranslator.view.story.SearchStoryWordFragment
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
@@ -35,12 +33,6 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     private val adapter: MainTranslationRvAdapter by inject(
         named("main_adapter")
     )
-
-    private val historyUsecaseImpl: SearchHistoryUsecaseImpl by inject(
-        named("history_usecase_impl")
-    )
-
-    private var coroutineScope: CoroutineScope? = null
 
     companion object {
         fun newInstance() = MainTranslationFragment()
@@ -67,13 +59,12 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.mainActionBar.inflateMenu(R.menu.main_menu)
         viewModel.onRestore()
         restoreView()
-
         initRv()
         onIconClick()
-
         toolbarMenuClicker()
     }
 
@@ -84,7 +75,14 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
                     Toast.makeText(requireContext(), "FAVORITE", Toast.LENGTH_SHORT).show()
                 }
                 R.id.main_history_fragment -> {
-                    Toast.makeText(requireContext(), "HISTORY", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager
+                        .beginTransaction()
+                        .replace(
+                            R.id.main_activity_container,
+                            SearchStoryWordFragment.newInstance()
+                        )
+                        .addToBackStack(null)
+                        .commit()
                 }
             }
             true
@@ -110,7 +108,7 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     override fun setSearchSuccess() {
         viewModel.result.observe(viewLifecycleOwner) {
             adapter.setData(it)
-            historyUsecaseImpl.addDataToDB(it)
+            viewModel.sendDataToDB(it)
         }
         viewModel.onError.observe(viewLifecycleOwner) {
             if (it != null) {
@@ -177,7 +175,6 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     }
 
     override fun onDestroyView() {
-        coroutineScope?.cancel()
         _binding = null
         super.onDestroyView()
     }
