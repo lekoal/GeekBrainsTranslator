@@ -15,7 +15,7 @@ interface SearchHistoryDao {
     fun historyGetAll(): List<WordData>
 
     @Query("SELECT * FROM WordData WHERE text LIKE :word")
-    fun historyGetWord(word: String): WordData
+    fun historyGetWord(word: String): WordData?
 
     @Update
     fun historyUpdate(entity: WordData)

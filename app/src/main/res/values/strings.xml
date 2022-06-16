@@ -16,4 +16,6 @@
     <string name="story_clear">Очистить историю</string>
     <string name="delete_item_title">Удалить запись</string>
     <string name="close_popup_menu_title">Отмена</string>
+    <string name="search_in_history_title">Искать в истории запросов</string>
+    <string name="search_in_history_hint">Введите слово для поиска</string>
 </resources>

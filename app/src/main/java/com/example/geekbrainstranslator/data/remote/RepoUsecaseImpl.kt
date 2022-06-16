@@ -49,6 +49,15 @@ class RepoUsecaseImpl(
         )
     }
 
+    override suspend fun searchDataInDB(text: String) : WordData? {
+        val result = historyDao.historyGetWord(text)
+        return if (!result?.translation.isNullOrEmpty()) {
+            result
+        } else {
+            null
+        }
+    }
+
     companion object {
         private const val BASE_URL = "https://dictionary.skyeng.ru/api/public/v1/"
     }

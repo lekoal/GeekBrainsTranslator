@@ -12,4 +12,10 @@
         android:icon="@drawable/ic_baseline_favorite_24"
         android:title="@string/open_favorite_fragment_title"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/search_in_history"
+        android:icon="@drawable/ic_baseline_content_paste_search_24"
+        android:title="@string/search_in_history_title"
+        app:showAsAction="ifRoom" />
 </menu>

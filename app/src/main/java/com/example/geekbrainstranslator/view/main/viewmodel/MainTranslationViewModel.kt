@@ -2,6 +2,7 @@ package com.example.geekbrainstranslator.view.main.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import com.example.geekbrainstranslator.data.entity.db.WordData
 import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
 import com.example.geekbrainstranslator.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.view.main.MainTranslationContract
@@ -18,6 +19,10 @@ constructor(
     override val inProgress: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     override val onError: MutableLiveData<Throwable> = MutableLiveData()
+
+    override val isInHistory: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    override val foundedData: MutableLiveData<WordData> = MutableLiveData<WordData>()
+    private var foundData: WordData? = null
 
     private var job: Job? = null
 
@@ -46,8 +51,20 @@ constructor(
         }
     }
 
+    override fun searchInHistory(text: String) {
+        viewModelCoroutineScope.launch {
+            foundData = repoUsecase.searchDataInDB(text)
+            if (foundData != null) {
+                isInHistory.postValue(true)
+                foundedData.postValue(foundData)
+            } else {
+                isInHistory.postValue(false)
+            }
+        }
+    }
+
     override fun onSearch(word: String) {
-        if(job != null) {
+        if (job != null) {
             cancelJob()
         }
         job = viewModelCoroutineScope.launch {

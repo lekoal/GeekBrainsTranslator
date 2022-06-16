@@ -7,13 +7,16 @@ import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
+import com.example.geekbrainstranslator.view.description.DescriptionWordFragment
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import com.example.geekbrainstranslator.view.story.SearchStoryWordFragment
 import org.koin.android.ext.android.inject
@@ -83,6 +86,9 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
                         )
                         .addToBackStack(null)
                         .commit()
+                }
+                R.id.search_in_history -> {
+                    showSearchDialog()
                 }
             }
             true
@@ -177,5 +183,55 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun showHistoryWordDetails() {
+        viewModel.foundedData.observe(viewLifecycleOwner) {
+            parentFragmentManager
+                .beginTransaction()
+                .replace(
+                    R.id.main_activity_container,
+                    DescriptionWordFragment.newInstance(it)
+                )
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+
+    private fun showSearchDialog(): String {
+        val builder = AlertDialog.Builder(requireContext())
+        val dialogLayout = layoutInflater.inflate(
+            R.layout.popup_edit_text_layout,
+            null
+        )
+        var searchText = ""
+        val editText = dialogLayout.findViewById<EditText>(R.id.search_in_history_edit_text)
+        with(builder) {
+            setTitle("Введите слово для поиска")
+            setPositiveButton("Искать") { _, _ ->
+                searchText = editText.text.toString()
+                if (searchText != "") {
+                    viewModel.searchInHistory(searchText)
+                    viewModel.isInHistory.observe(viewLifecycleOwner) { inHistory ->
+                        if (inHistory) {
+                            showHistoryWordDetails()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Не найдено",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    }
+                }
+            }
+            setNegativeButton("Отмена") { _, _ ->
+                Toast.makeText(requireContext(), "Поиск отменён", Toast.LENGTH_SHORT).show()
+            }
+            setView(dialogLayout)
+            show()
+        }
+        return searchText
     }
 }
