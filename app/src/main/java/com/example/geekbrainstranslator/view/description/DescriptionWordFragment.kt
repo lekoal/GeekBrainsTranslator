@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
-import com.example.geekbrainstranslator.data.entity.db.WordData
 import com.example.geekbrainstranslator.databinding.FragmentDescriptionWordBinding
 import com.example.geekbrainstranslator.view.description.viewmodel.DescriptionWordViewModel
 import com.example.geekbrainstranslator.view.main.MainTranslationFragment
@@ -19,7 +18,7 @@ class DescriptionWordFragment : Fragment(), DescriptionWordContract.View {
     private var _binding: FragmentDescriptionWordBinding? = null
     private val binding get() = _binding!!
 
-    private var dataItem: WordData? = null
+    private var dataItem = ""
 
     private val viewModel: DescriptionWordViewModel by viewModel(
         named("description_view_model")
@@ -43,9 +42,9 @@ class DescriptionWordFragment : Fragment(), DescriptionWordContract.View {
     }
 
     companion object {
-        fun newInstance(item: WordData): DescriptionWordFragment {
+        fun newInstance(itemName: String): DescriptionWordFragment {
             val fragment = DescriptionWordFragment()
-            fragment.dataItem = item
+            fragment.dataItem = itemName
             return fragment
         }
     }
@@ -58,7 +57,9 @@ class DescriptionWordFragment : Fragment(), DescriptionWordContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.descriptionActionBar.inflateMenu(R.menu.details_menu)
-        dataItem?.let { viewModel.setWordDetails(it) }
+        dataItem.let {
+            viewModel.setWordDetails(it)
+        }
         initRv()
         setData()
         toolbarMenuClicker()

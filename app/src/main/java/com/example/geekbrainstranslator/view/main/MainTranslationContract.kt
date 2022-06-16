@@ -1,7 +1,6 @@
 package com.example.geekbrainstranslator.view.main
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.geekbrainstranslator.data.entity.db.WordData
 import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
 

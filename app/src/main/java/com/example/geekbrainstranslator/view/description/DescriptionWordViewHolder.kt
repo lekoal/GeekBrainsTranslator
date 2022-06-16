@@ -1,6 +1,5 @@
 package com.example.geekbrainstranslator.view.description
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,7 +18,6 @@ class DescriptionWordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         Glide.with(itemView)
             .load("https:${item.imageUrl}")
             .into(image)
-        Log.i("MY_TAG", item.imageUrl.toString())
         transcription.text = item.transcription
         translation.text = item.translation
         partOfSpeech.text = item.partOfSpeechCode

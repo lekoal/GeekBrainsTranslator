@@ -11,6 +11,6 @@ val koinDataBaseDescriptionModule = module {
         DescriptionWordRvAdapter()
     }
     viewModel<DescriptionWordViewModel>(named("description_view_model")) {
-        DescriptionWordViewModel()
+        DescriptionWordViewModel(get(named("history_usecase_impl")))
     }
 }

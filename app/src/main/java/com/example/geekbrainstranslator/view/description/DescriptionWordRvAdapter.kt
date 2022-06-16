@@ -38,6 +38,7 @@ class DescriptionWordRvAdapter : RecyclerView.Adapter<DescriptionWordViewHolder>
     }
 
     override fun onBindViewHolder(holder: DescriptionWordViewHolder, position: Int) {
+
         holder.bind(getItem(position))
     }
 

@@ -185,17 +185,15 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
         super.onDestroyView()
     }
 
-    private fun showHistoryWordDetails() {
-        viewModel.foundedData.observe(viewLifecycleOwner) {
-            parentFragmentManager
-                .beginTransaction()
-                .replace(
-                    R.id.main_activity_container,
-                    DescriptionWordFragment.newInstance(it)
-                )
-                .addToBackStack(null)
-                .commit()
-        }
+    private fun showHistoryWordDetails(searchingText: String) {
+        parentFragmentManager
+            .beginTransaction()
+            .replace(
+                R.id.main_activity_container,
+                DescriptionWordFragment.newInstance(searchingText)
+            )
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun showSearchDialog(): String {
@@ -214,7 +212,7 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
                     viewModel.searchInHistory(searchText)
                     viewModel.isInHistory.observe(viewLifecycleOwner) { inHistory ->
                         if (inHistory) {
-                            showHistoryWordDetails()
+                            showHistoryWordDetails(searchText)
                         } else {
                             Toast.makeText(
                                 requireContext(),

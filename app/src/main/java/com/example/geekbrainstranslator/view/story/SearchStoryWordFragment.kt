@@ -114,7 +114,7 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
                     .beginTransaction()
                     .replace(
                         R.id.main_activity_container,
-                        DescriptionWordFragment.newInstance(listData[position])
+                        DescriptionWordFragment.newInstance(listData[position].text.toString())
                     )
                     .addToBackStack(null)
                     .commit()

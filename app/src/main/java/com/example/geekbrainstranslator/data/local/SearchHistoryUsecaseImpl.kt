@@ -14,6 +14,10 @@ class SearchHistoryUsecaseImpl(private val historyDao: SearchHistoryDao) : Searc
         historyDao.historyDelete(data)
     }
 
+    override suspend fun getDataItemFromDB(text: String): WordData {
+        return historyDao.historyGetWord(text)
+    }
+
     override suspend fun clearDB() {
         historyDao.clearTable()
     }

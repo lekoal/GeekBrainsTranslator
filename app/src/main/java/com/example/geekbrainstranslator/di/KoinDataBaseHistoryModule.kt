@@ -2,8 +2,8 @@ package com.example.geekbrainstranslator.di
 
 import androidx.room.Room
 import com.example.geekbrainstranslator.data.entity.db.dao.SearchHistoryDao
-import com.example.geekbrainstranslator.data.local.SearchHistoryDataBase
 import com.example.geekbrainstranslator.data.local.SearchHistoryUsecaseImpl
+import com.example.geekbrainstranslator.data.local.database.SearchHistoryDataBase
 import com.example.geekbrainstranslator.domain.SearchHistoryUsecase
 import com.example.geekbrainstranslator.view.story.SearchStoryRvAdapter
 import com.example.geekbrainstranslator.view.story.viewmodel.SearchHistoryViewModel
