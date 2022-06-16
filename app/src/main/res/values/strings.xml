@@ -14,4 +14,6 @@
     <string name="open_favorite_fragment_title">Избранное</string>
     <string name="open_home_fragment_title">Домой</string>
     <string name="story_clear">Очистить историю</string>
+    <string name="delete_item_title">Удалить запись</string>
+    <string name="close_popup_menu_title">Отмена</string>
 </resources>

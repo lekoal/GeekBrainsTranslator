@@ -10,7 +10,7 @@ interface DescriptionWordContract {
 
     abstract class ViewModel : androidx.lifecycle.ViewModel() {
         abstract val wordDetails: LiveData<WordData>
-        abstract fun getWordDetails()
+        abstract fun setWordDetails(item: WordData)
         abstract fun restoreWordDetails()
     }
 }

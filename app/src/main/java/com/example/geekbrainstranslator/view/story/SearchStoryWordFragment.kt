@@ -3,11 +3,15 @@ package com.example.geekbrainstranslator.view.story
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.data.entity.db.WordData
 import com.example.geekbrainstranslator.databinding.FragmentSearchStoryWordBinding
+import com.example.geekbrainstranslator.view.description.DescriptionWordFragment
+import com.example.geekbrainstranslator.view.main.MainTranslationFragment
 import com.example.geekbrainstranslator.view.story.viewmodel.SearchHistoryViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -67,7 +71,13 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
                     Toast.makeText(requireContext(), "FAVORITE", Toast.LENGTH_SHORT).show()
                 }
                 R.id.history_home_fragment -> {
-                    Toast.makeText(requireContext(), "HOME", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager
+                        .beginTransaction()
+                        .replace(
+                            R.id.main_activity_container,
+                            MainTranslationFragment.newInstance()
+                        )
+                        .commit()
                 }
                 R.id.history_clear -> {
                     viewModel.clearHistory()
@@ -100,13 +110,37 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
     private fun setAdapterClicker() {
         adapter.setOnItemClickListener(object : SearchStoryRvAdapter.OnItemClickListener {
             override fun onItemClick(position: Int) {
-                Toast.makeText(requireContext(), "Clicked on ${listData[position]}", Toast.LENGTH_SHORT).show()
+                parentFragmentManager
+                    .beginTransaction()
+                    .replace(
+                        R.id.main_activity_container,
+                        DescriptionWordFragment.newInstance(listData[position])
+                    )
+                    .addToBackStack(null)
+                    .commit()
             }
 
             override fun onLongItemClick(position: Int) {
-                Toast.makeText(requireContext(), "Long Clicked on ${listData[position]}", Toast.LENGTH_SHORT).show()
+                showPopupMenu(position, binding.rvHistoryList[position])
             }
         })
+    }
 
+    private fun showPopupMenu(position: Int, anchor: View) {
+        val popupMenu = PopupMenu(requireContext(), anchor)
+        popupMenu.inflate(R.menu.popup_menu)
+        popupMenu.show()
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.delete_history_item -> {
+                    adapter.removeFromHistory(listData[position])
+                    viewModel.deleteHistoryItem(listData[position])
+                }
+                R.id.close_menu -> {
+                    popupMenu.dismiss()
+                }
+            }
+            true
+        }
     }
 }
