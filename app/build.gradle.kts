@@ -57,33 +57,33 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
 
     //Retrofit 2
-    val retrofit_version = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofit_version")
+    val retrofitVersion = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
 
     //Broadcast manager
     implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
     //Koin
-    val koin_version= "3.2.0"
-    implementation("io.insert-koin:koin-core:$koin_version")
-    implementation("io.insert-koin:koin-android:$koin_version")
-    implementation("io.insert-koin:koin-android-compat:$koin_version")
+    val koinVersion= "3.2.0"
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation("io.insert-koin:koin-android-compat:$koinVersion")
 
     //Coroutines
-    val coroutines_version = "1.6.2"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+    val coroutinesVersion = "1.6.2"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
 
     //Room
-    val room_version = "2.4.2"
-    implementation("androidx.room:room-runtime:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
+    val roomVersion = "2.4.2"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 
     //Glide
-    val glide_version = "4.13.2"
-    implementation("com.github.bumptech.glide:glide:$glide_version")
-    kapt("com.github.bumptech.glide:compiler:$glide_version")
+    val glideVersion = "4.13.2"
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
+    kapt("com.github.bumptech.glide:compiler:$glideVersion")
 }
