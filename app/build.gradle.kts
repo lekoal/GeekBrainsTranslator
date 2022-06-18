@@ -26,7 +26,9 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -49,41 +51,38 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("com.google.android.material:material:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:2.4.1")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")
 
+    //LIFECYCLE
+    implementation(Dependencies.LIFECYCLE_LIVEDATA_DEPENDENCY)
+    implementation(Dependencies.LIFECYCLE_VIEWMODEL_DEPENDENCY)
+    implementation(Dependencies.LIFECYCLE_VIEWMODEL_SAVEDSTATE_DEPENDENCY)
+
     //Retrofit 2
-    val retrofitVersion = "2.9.0"
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2")
+    implementation(Dependencies.RETROFIT_DEPENDENCY)
+    implementation(Dependencies.RETROFIT_JSON_CONVERTER_DEPENDENCY)
+    implementation(Dependencies.RETROFIT_COROUTINES_ADAPTER_DEPENDENCY)
 
     //Broadcast manager
-    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
+    implementation(Dependencies.BROADCAST_MANAGER_DEPENDENCY)
 
     //Koin
-    val koinVersion= "3.2.0"
-    implementation("io.insert-koin:koin-core:$koinVersion")
-    implementation("io.insert-koin:koin-android:$koinVersion")
-    implementation("io.insert-koin:koin-android-compat:$koinVersion")
+    implementation(Dependencies.KOIN_CORE_DEPENDENCY)
+    implementation(Dependencies.KOIN_ANDROID_DEPENDENCY)
+    implementation(Dependencies.KOIN_ANDROID_COMPAT_DEPENDENCY)
 
     //Coroutines
-    val coroutinesVersion = "1.6.2"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation(Dependencies.COROUTINE_CORE_DEPENDENCY)
+    implementation(Dependencies.COROUTINE_ANDROID_DEPENDENCY)
 
     //Room
-    val roomVersion = "2.4.2"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation(Dependencies.ROOM_RUNTIME_DEPENDENCY)
+    kapt(Dependencies.ROOM_COMPILER_DEPENDENCY)
+    implementation(Dependencies.ROOM_KTX_DEPENDENCY)
 
     //Glide
-    val glideVersion = "4.13.2"
-    implementation("com.github.bumptech.glide:glide:$glideVersion")
-    kapt("com.github.bumptech.glide:compiler:$glideVersion")
+    implementation(Dependencies.GLIDE_DEPENDENCY)
+    kapt(Dependencies.GLIDE_COMPILER_DEPENDENCY)
 }
