@@ -1,8 +1,8 @@
 package com.example.geekbrainstranslator.view.main
 
 import androidx.lifecycle.LiveData
-import com.example.geekbrainstranslator.data.entity.db.WordData
-import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
+import com.example.data.entity.db.WordData
+import com.example.data.entity.web.TranslateDTO
 
 interface MainTranslationContract {
     interface ViewPresenter {

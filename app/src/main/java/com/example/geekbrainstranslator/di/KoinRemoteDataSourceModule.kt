@@ -1,9 +1,9 @@
 package com.example.geekbrainstranslator.di
 
 import androidx.lifecycle.SavedStateHandle
+import com.example.domain.RepositoryUsecase
+import com.example.domain.SkyengApi
 import com.example.geekbrainstranslator.data.remote.RepoUsecaseImpl
-import com.example.geekbrainstranslator.domain.RepositoryUsecase
-import com.example.geekbrainstranslator.domain.SkyengApi
 import com.example.geekbrainstranslator.view.main.MainTranslationRvAdapter
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory

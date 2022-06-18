@@ -21,9 +21,9 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 remoteDataSourceModule,
+                koinDataBaseDescriptionModule,
                 koinDataBaseHistoryModule,
-                koinDataBaseFavoriteModule,
-                koinDataBaseDescriptionModule
+                koinDataBaseFavoriteModule
             )
         }
     }

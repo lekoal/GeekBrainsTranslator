@@ -5,8 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.data.entity.db.WordDataDetails
 import com.example.geekbrainstranslator.R
-import com.example.geekbrainstranslator.data.entity.db.WordDataDetails
 
 class DescriptionWordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val image: ImageView = itemView.findViewById(R.id.entity_image)

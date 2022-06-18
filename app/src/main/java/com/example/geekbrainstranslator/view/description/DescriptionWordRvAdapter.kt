@@ -3,9 +3,9 @@ package com.example.geekbrainstranslator.view.description
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.data.entity.db.WordData
+import com.example.data.entity.db.WordDataDetails
 import com.example.geekbrainstranslator.R
-import com.example.geekbrainstranslator.data.entity.db.WordData
-import com.example.geekbrainstranslator.data.entity.db.WordDataDetails
 
 class DescriptionWordRvAdapter : RecyclerView.Adapter<DescriptionWordViewHolder>() {
     private val data = mutableListOf<WordDataDetails>()

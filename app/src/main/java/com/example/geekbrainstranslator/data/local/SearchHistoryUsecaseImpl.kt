@@ -1,8 +1,8 @@
 package com.example.geekbrainstranslator.data.local
 
-import com.example.geekbrainstranslator.data.entity.db.WordData
-import com.example.geekbrainstranslator.data.entity.db.dao.SearchHistoryDao
-import com.example.geekbrainstranslator.domain.SearchHistoryUsecase
+import com.example.data.entity.db.WordData
+import com.example.data.entity.db.dao.SearchHistoryDao
+import com.example.domain.SearchHistoryUsecase
 
 class SearchHistoryUsecaseImpl(private val historyDao: SearchHistoryDao) : SearchHistoryUsecase {
 

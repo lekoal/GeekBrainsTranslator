@@ -1,10 +1,10 @@
 package com.example.geekbrainstranslator.data.remote
 
-import com.example.geekbrainstranslator.data.entity.db.WordData
-import com.example.geekbrainstranslator.data.entity.db.dao.SearchHistoryDao
-import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
-import com.example.geekbrainstranslator.domain.RepositoryUsecase
-import com.example.geekbrainstranslator.domain.SkyengApi
+import com.example.data.entity.db.WordData
+import com.example.data.entity.db.dao.SearchHistoryDao
+import com.example.data.entity.web.TranslateDTO
+import com.example.domain.RepositoryUsecase
+import com.example.domain.SkyengApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
@@ -51,7 +51,7 @@ class RepoUsecaseImpl(
 
     override suspend fun searchDataInDB(text: String) : WordData? {
         val result = historyDao.historyGetWord(text)
-        return if (!result?.translation.isNullOrEmpty()) {
+        return if (result.translation.isNotEmpty()) {
             result
         } else {
             null

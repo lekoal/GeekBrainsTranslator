@@ -44,4 +44,8 @@ object Dependencies {
         "androidx.lifecycle:lifecycle-viewmodel-savedstate:$LIFECYCLE_VERSION"
     const val MY_UTILS =
         ":utils"
+    const val DOMAIN =
+        ":domain"
+    const val DATA =
+        ":data"
 }

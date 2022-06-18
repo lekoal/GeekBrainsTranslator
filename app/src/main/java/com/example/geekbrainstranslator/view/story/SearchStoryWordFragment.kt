@@ -7,8 +7,8 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.data.entity.db.WordData
 import com.example.geekbrainstranslator.R
-import com.example.geekbrainstranslator.data.entity.db.WordData
 import com.example.geekbrainstranslator.databinding.FragmentSearchStoryWordBinding
 import com.example.geekbrainstranslator.view.description.DescriptionWordFragment
 import com.example.geekbrainstranslator.view.main.MainTranslationFragment

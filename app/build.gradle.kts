@@ -88,4 +88,10 @@ dependencies {
 
     //UTILS
     implementation(project(Dependencies.MY_UTILS))
+
+    //DOMAIN
+    implementation(project(Dependencies.DOMAIN))
+
+    //DATA
+    implementation(project(Dependencies.DATA))
 }
