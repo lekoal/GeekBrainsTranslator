@@ -85,4 +85,7 @@ dependencies {
     //Glide
     implementation(Dependencies.GLIDE_DEPENDENCY)
     kapt(Dependencies.GLIDE_COMPILER_DEPENDENCY)
+
+    //UTILS
+    implementation(project(Dependencies.MY_UTILS))
 }

@@ -1,4 +1,4 @@
-package com.example.geekbrainstranslator.utils
+package com.example.utils
 
 import android.content.Context
 import android.util.AttributeSet

@@ -42,4 +42,6 @@ object Dependencies {
         "androidx.lifecycle:lifecycle-viewmodel-ktx:$LIFECYCLE_VERSION"
     const val LIFECYCLE_VIEWMODEL_SAVEDSTATE_DEPENDENCY =
         "androidx.lifecycle:lifecycle-viewmodel-savedstate:$LIFECYCLE_VERSION"
+    const val MY_UTILS =
+        ":utils"
 }
