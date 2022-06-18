@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/main_history_fragment"
+        android:icon="@drawable/ic_baseline_history_24"
+        android:title="@string/open_history_fragment_title"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/main_favorite_fragment"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="@string/open_favorite_fragment_title"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/search_in_history"
+        android:icon="@drawable/ic_baseline_content_paste_search_24"
+        android:title="@string/search_in_history_title"
+        app:showAsAction="ifRoom" />
+</menu>

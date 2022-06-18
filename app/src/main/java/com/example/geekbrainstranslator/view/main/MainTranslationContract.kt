@@ -1,8 +1,8 @@
-package com.example.geekbrainstranslator.view
+package com.example.geekbrainstranslator.view.main
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.example.geekbrainstranslator.data.entity.TranslateDTO
+import com.example.geekbrainstranslator.data.entity.db.WordData
+import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
 
 interface MainTranslationContract {
     interface ViewPresenter {
@@ -27,7 +27,11 @@ interface MainTranslationContract {
         abstract fun onSearch(word: String)
         abstract val result: LiveData<List<TranslateDTO>>
         abstract val inProgress: LiveData<Boolean>
-        abstract val onError: MutableLiveData<Throwable>
+        abstract val onError: LiveData<Throwable>
+        abstract val isInHistory: LiveData<Boolean>
+        abstract val foundedData: LiveData<WordData>
         abstract fun onRestore()
+        abstract fun sendDataToDB(data: List<TranslateDTO>)
+        abstract fun searchInHistory(text: String)
     }
 }

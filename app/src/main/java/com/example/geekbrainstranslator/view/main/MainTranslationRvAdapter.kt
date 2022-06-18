@@ -1,11 +1,11 @@
-package com.example.geekbrainstranslator.view
+package com.example.geekbrainstranslator.view.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.geekbrainstranslator.R
-import com.example.geekbrainstranslator.data.entity.TranslateDTO
-import com.example.geekbrainstranslator.data.entity.Translation
+import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
+import com.example.geekbrainstranslator.data.entity.web.Translation
 
 class MainTranslationRvAdapter : RecyclerView.Adapter<MainTranslationViewHolder>() {
     private val data = mutableListOf<Translation?>()

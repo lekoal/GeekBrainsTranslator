@@ -1,4 +1,4 @@
-package com.example.geekbrainstranslator.view
+package com.example.geekbrainstranslator.view.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(binding.container.id, MainTranslationFragment.newInstance())
+                .add(binding.mainActivityContainer.id, MainTranslationFragment.newInstance())
                 .commit()
         }
     }
