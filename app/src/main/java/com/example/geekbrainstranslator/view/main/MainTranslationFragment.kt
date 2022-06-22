@@ -2,8 +2,6 @@ package com.example.geekbrainstranslator.view.main
 
 import android.app.Activity
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -19,6 +17,7 @@ import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBindi
 import com.example.geekbrainstranslator.view.description.DescriptionWordFragment
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import com.example.geekbrainstranslator.view.story.SearchStoryWordFragment
+import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.getKoin
 import org.koin.core.qualifier.named
 
@@ -73,6 +72,7 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
         initRv()
         onIconClick()
         toolbarMenuClicker()
+        isOnline()
     }
 
     private fun toolbarMenuClicker() {
@@ -104,11 +104,7 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
             requireActivity().hideKeyboard()
             if (binding.inputText.text.toString() != "") {
                 setSearchSuccess()
-                if (isOnline(requireContext())) {
-                    viewModel.onSearch(binding.inputText.text.toString())
-                } else {
-                    setSearchError("Отсутствует подключение!")
-                }
+                viewModel.onSearch(binding.inputText.text.toString())
             } else {
                 setSearchError("Введите слово для поиска!")
             }
@@ -156,24 +152,23 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
         )
     }
 
-    private fun isOnline(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val capabilities =
-            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-        if (capabilities != null) {
-            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
-                return true
-            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
-                return true
-            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
-                return true
+    private fun isOnline() {
+        val connectionLiveData = ConnectionLiveData(requireContext())
+        val snackBar: Snackbar =
+            Snackbar.make(binding.root, "Отсутствует подключение!", Snackbar.LENGTH_INDEFINITE)
+        connectionLiveData.check()
+
+        connectionLiveData.isOnline.observe(viewLifecycleOwner) { isNetworkAvailable ->
+            Log.i("MY_TAG_IS_ONLINE", isNetworkAvailable.toString())
+            if (isNetworkAvailable) {
+                if (snackBar.isShownOrQueued) {
+                    snackBar.dismiss()
+                }
+
+            } else {
+                snackBar.show()
             }
         }
-        return false
     }
 
     private fun Context.hideKeyboard(view: View) {

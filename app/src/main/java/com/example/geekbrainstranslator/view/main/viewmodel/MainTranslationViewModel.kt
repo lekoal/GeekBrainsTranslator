@@ -22,6 +22,7 @@ constructor(
 
     override val isInHistory: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     override val foundedData: MutableLiveData<WordData> = MutableLiveData<WordData>()
+
     private var foundData: WordData? = null
 
     private var job: Job? = null

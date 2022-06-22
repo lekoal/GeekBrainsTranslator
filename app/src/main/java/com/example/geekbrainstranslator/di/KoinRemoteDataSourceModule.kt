@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.example.domain.RepositoryUsecase
 import com.example.domain.SkyengApi
 import com.example.geekbrainstranslator.data.remote.RepoUsecaseImpl
+import com.example.geekbrainstranslator.view.main.ConnectionLiveData
 import com.example.geekbrainstranslator.view.main.MainTranslationFragment
 import com.example.geekbrainstranslator.view.main.MainTranslationRvAdapter
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
