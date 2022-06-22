@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.example.domain.RepositoryUsecase
 import com.example.domain.SkyengApi
 import com.example.geekbrainstranslator.data.remote.RepoUsecaseImpl
+import com.example.geekbrainstranslator.view.main.MainTranslationFragment
 import com.example.geekbrainstranslator.view.main.MainTranslationRvAdapter
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -15,9 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val remoteDataSourceModule = module {
-    single<MainTranslationRvAdapter>(named("main_adapter")) {
-        MainTranslationRvAdapter()
-    }
+
     single<SavedStateHandle>(named("main_save_state_handle")) {
         SavedStateHandle()
     }
@@ -40,10 +39,16 @@ val remoteDataSourceModule = module {
             .addConverterFactory(get(named("gson_converter_factory")))
             .build()
     }
-    viewModel(named("main_view_model")) {
-        MainTranslationViewModel(
-            get(named("repo_usecase")),
-            get(named("main_save_state_handle"))
-        )
+
+    scope<MainTranslationFragment> {
+        scoped(named("main_adapter")) {
+            MainTranslationRvAdapter()
+        }
+        viewModel(named("main_view_model")) {
+            MainTranslationViewModel(
+                get(named("repo_usecase")),
+                get(named("main_save_state_handle"))
+            )
+        }
     }
 }

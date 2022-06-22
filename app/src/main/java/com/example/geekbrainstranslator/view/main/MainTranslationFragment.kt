@@ -19,8 +19,7 @@ import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBindi
 import com.example.geekbrainstranslator.view.description.DescriptionWordFragment
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import com.example.geekbrainstranslator.view.story.SearchStoryWordFragment
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.getKoin
 import org.koin.core.qualifier.named
 
 class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
@@ -29,16 +28,21 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     private var _binding: FragmentMainTranslationBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MainTranslationViewModel by viewModel(
-        named("main_view_model")
-    )
+    private val scope by lazy {
+        getKoin().getOrCreateScope<MainTranslationFragment>(SCOPE_ID)
+    }
 
-    private val adapter: MainTranslationRvAdapter by inject(
-        named("main_adapter")
-    )
+    private val adapter: MainTranslationRvAdapter by lazy {
+        scope.get(named("main_adapter"))
+    }
+
+    private val viewModel: MainTranslationViewModel by lazy {
+        scope.get(named("main_view_model"))
+    }
 
     companion object {
         fun newInstance() = MainTranslationFragment()
+        const val SCOPE_ID = "mainScope"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -182,6 +186,7 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
 
     override fun onDestroyView() {
         _binding = null
+        scope.close()
         super.onDestroyView()
     }
 

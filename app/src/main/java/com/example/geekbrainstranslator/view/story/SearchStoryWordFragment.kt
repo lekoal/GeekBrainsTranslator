@@ -13,8 +13,7 @@ import com.example.geekbrainstranslator.databinding.FragmentSearchStoryWordBindi
 import com.example.geekbrainstranslator.view.description.DescriptionWordFragment
 import com.example.geekbrainstranslator.view.main.MainTranslationFragment
 import com.example.geekbrainstranslator.view.story.viewmodel.SearchHistoryViewModel
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.getKoin
 import org.koin.core.qualifier.named
 
 class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
@@ -24,13 +23,15 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
 
     private lateinit var listData: List<WordData>
 
-    private val adapter: SearchStoryRvAdapter by inject(
-        named("search_history_adapter")
-    )
+    private val scope = getKoin().getOrCreateScope<SearchStoryWordFragment>(SCOPE_ID)
 
-    private val viewModel: SearchHistoryViewModel by viewModel(
-        named("search_history_view_model")
-    )
+    private val adapter: SearchStoryRvAdapter by lazy {
+        scope.get(named("search_history_adapter"))
+    }
+
+    private val viewModel: SearchHistoryViewModel by lazy {
+        scope.get(named("search_history_view_model"))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +53,7 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
 
     companion object {
         fun newInstance() = SearchStoryWordFragment()
+        const val SCOPE_ID = "storyScope"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -95,6 +97,7 @@ class SearchStoryWordFragment : Fragment(), SearchStoryContract.View {
 
     override fun onDestroy() {
         _binding = null
+        scope.close()
         super.onDestroy()
     }
 
