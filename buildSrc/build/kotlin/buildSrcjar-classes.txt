@@ -1,1 +1,1 @@
-C:\Users\coreg\StudioProjects\GeekBrainsTranslator\buildSrc\build\classes\kotlin\main\Dependencies.class
+C:\Users\coreglus\AndroidStudioProjects\GeekBrainsTranslator\buildSrc\build\classes\kotlin\main\Dependencies.class

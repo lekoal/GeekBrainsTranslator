@@ -10,13 +10,14 @@ import com.example.utils.WordDataConverter
 import com.example.utils.WordDataConverterImpl
 
 class DescriptionWordRvAdapter : RecyclerView.Adapter<DescriptionWordViewHolder>() {
-    private var data: List<WordDataDetails>? = null
+    private var data = mutableListOf<WordDataDetails>()
 
     private val converterImpl = WordDataConverterImpl()
 
     fun setData(currentData: WordData) {
+        data.clear()
         converterImpl.currentData = currentData
-        data = DelegateConverter(converterImpl).convert()
+        data = DelegateConverter(converterImpl).convert() as MutableList<WordDataDetails>
         notifyDataSetChanged()
     }
 
@@ -31,9 +32,9 @@ class DescriptionWordRvAdapter : RecyclerView.Adapter<DescriptionWordViewHolder>
         holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = data?.size!!
+    override fun getItemCount(): Int = data.size
 
-    private fun getItem(position: Int): WordDataDetails = data?.get(position)!!
+    private fun getItem(position: Int): WordDataDetails = data[position]
 }
 
 class DelegateConverter(converter: WordDataConverter) : WordDataConverter by converter

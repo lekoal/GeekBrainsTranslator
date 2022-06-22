@@ -9,7 +9,8 @@ class WordDataConverterImpl : WordDataConverter {
     private val tempData = mutableListOf<WordDataDetails>()
     var data: List<WordDataDetails> by DelegateWordDataDetails()
 
-    override fun convert(): List<WordDataDetails> {
+    override fun convert(): MutableList<WordDataDetails> {
+        tempData.clear()
         for (i in 0 until (currentData?.transcription?.size!!)) {
             tempData.add(
                 WordDataDetails(
@@ -22,7 +23,6 @@ class WordDataConverterImpl : WordDataConverter {
             )
         }
         data = tempData
-        Log.i("MY_TAG_CONVERTER", data.toString())
-        return data
+        return tempData
     }
 }
