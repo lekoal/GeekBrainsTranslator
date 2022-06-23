@@ -3,7 +3,6 @@ package com.example.geekbrainstranslator.view.main
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
@@ -26,6 +25,10 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
 
     private var _binding: FragmentMainTranslationBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var connectionLiveData: ConnectionLiveData
+
+    private var isConnected = true
 
     private val scope by lazy {
         getKoin().getOrCreateScope<MainTranslationFragment>(SCOPE_ID)
@@ -104,7 +107,9 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
             requireActivity().hideKeyboard()
             if (binding.inputText.text.toString() != "") {
                 setSearchSuccess()
-                viewModel.onSearch(binding.inputText.text.toString())
+                if (isConnected) {
+                    viewModel.onSearch(binding.inputText.text.toString())
+                }
             } else {
                 setSearchError("Введите слово для поиска!")
             }
@@ -153,20 +158,18 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     }
 
     private fun isOnline() {
-        val connectionLiveData = ConnectionLiveData(requireContext())
         val snackBar: Snackbar =
             Snackbar.make(binding.root, "Отсутствует подключение!", Snackbar.LENGTH_INDEFINITE)
-        connectionLiveData.check()
-
-        connectionLiveData.isOnline.observe(viewLifecycleOwner) { isNetworkAvailable ->
-            Log.i("MY_TAG_IS_ONLINE", isNetworkAvailable.toString())
-            if (isNetworkAvailable) {
+        connectionLiveData = ConnectionLiveData(app)
+        connectionLiveData.observe(viewLifecycleOwner) { isOnline ->
+            isConnected = if (isOnline) {
                 if (snackBar.isShownOrQueued) {
                     snackBar.dismiss()
                 }
-
+                true
             } else {
                 snackBar.show()
+                false
             }
         }
     }
