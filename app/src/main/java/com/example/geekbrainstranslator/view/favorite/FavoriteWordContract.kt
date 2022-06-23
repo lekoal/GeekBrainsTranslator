@@ -1,7 +1,7 @@
 package com.example.geekbrainstranslator.view.favorite
 
 import androidx.lifecycle.LiveData
-import com.example.geekbrainstranslator.data.entity.db.WordData
+import com.example.data.entity.db.WordData
 
 interface FavoriteWordContract {
     interface View {

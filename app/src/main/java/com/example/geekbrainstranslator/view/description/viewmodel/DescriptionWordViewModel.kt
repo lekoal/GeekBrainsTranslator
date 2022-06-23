@@ -1,8 +1,8 @@
 package com.example.geekbrainstranslator.view.description.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.example.geekbrainstranslator.data.entity.db.WordData
-import com.example.geekbrainstranslator.domain.SearchHistoryUsecase
+import com.example.data.entity.db.WordData
+import com.example.domain.SearchHistoryUsecase
 import com.example.geekbrainstranslator.view.description.DescriptionWordContract
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

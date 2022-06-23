@@ -2,9 +2,9 @@ package com.example.geekbrainstranslator.view.main.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.example.geekbrainstranslator.data.entity.db.WordData
-import com.example.geekbrainstranslator.data.entity.web.TranslateDTO
-import com.example.geekbrainstranslator.domain.RepositoryUsecase
+import com.example.data.entity.db.WordData
+import com.example.data.entity.web.TranslateDTO
+import com.example.domain.RepositoryUsecase
 import com.example.geekbrainstranslator.view.main.MainTranslationContract
 import kotlinx.coroutines.*
 
