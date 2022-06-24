@@ -2,6 +2,7 @@ package com.example.geekbrainstranslator.view.description
 
 import android.graphics.RenderEffect
 import android.graphics.Shader
+import android.os.Build
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,7 +21,9 @@ class DescriptionWordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val blurEffect = RenderEffect.createBlurEffect(16f, 16f, Shader.TileMode.MIRROR)
 
     fun bind(item: WordDataDetails) {
-        imageBlur()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            imageBlur()
+        }
         Glide.with(itemView)
             .load("https:${item.imageUrl}")
             .into(image)
