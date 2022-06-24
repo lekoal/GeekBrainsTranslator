@@ -9,8 +9,7 @@ import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.databinding.FragmentDescriptionWordBinding
 import com.example.geekbrainstranslator.view.description.viewmodel.DescriptionWordViewModel
 import com.example.geekbrainstranslator.view.main.MainTranslationFragment
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.getKoin
 import org.koin.core.qualifier.named
 
 class DescriptionWordFragment : Fragment(), DescriptionWordContract.View {
@@ -20,13 +19,15 @@ class DescriptionWordFragment : Fragment(), DescriptionWordContract.View {
 
     private var dataItem = ""
 
-    private val viewModel: DescriptionWordViewModel by viewModel(
-        named("description_view_model")
-    )
+    private val scope = getKoin().getOrCreateScope<DescriptionWordFragment>(SCOPE_ID)
 
-    private val adapter: DescriptionWordRvAdapter by inject(
-        named("description_rv_adapter")
-    )
+    private val adapter: DescriptionWordRvAdapter by lazy {
+        scope.get(named("description_rv_adapter"))
+    }
+
+    private val viewModel: DescriptionWordViewModel by lazy {
+        scope.get(named("description_view_model"))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class DescriptionWordFragment : Fragment(), DescriptionWordContract.View {
     }
 
     companion object {
+        const val SCOPE_ID = "descriptionScope"
         fun newInstance(itemName: String): DescriptionWordFragment {
             val fragment = DescriptionWordFragment()
             fragment.dataItem = itemName
@@ -66,6 +68,7 @@ class DescriptionWordFragment : Fragment(), DescriptionWordContract.View {
     }
 
     override fun onDestroy() {
+        scope.close()
         _binding = null
         super.onDestroy()
     }

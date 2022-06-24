@@ -6,28 +6,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.data.entity.db.WordData
 import com.example.data.entity.db.WordDataDetails
 import com.example.geekbrainstranslator.R
+import com.example.utils.WordDataConverter
+import com.example.utils.WordDataConverterImpl
 
 class DescriptionWordRvAdapter : RecyclerView.Adapter<DescriptionWordViewHolder>() {
-    private val data = mutableListOf<WordDataDetails>()
+    private var data = mutableListOf<WordDataDetails>()
+
+    private val converterImpl = WordDataConverterImpl()
 
     fun setData(currentData: WordData) {
         data.clear()
-        val translationList = currentData.translation
-        val transcriptionList = currentData.transcription
-        val imageUrlList = currentData.imageUrl
-        val partOfSpeechList = currentData.partOfSpeechCode
-        val size = currentData.translation.size
-
-        for (i in 0 until size) {
-            data.add(
-                WordDataDetails(
-                    imageUrl = imageUrlList[i],
-                    translation = translationList[i],
-                    transcription = transcriptionList[i],
-                    partOfSpeechCode = partOfSpeechList[i]
-                )
-            )
-        }
+        converterImpl.currentData = currentData
+        data = DelegateConverter(converterImpl).convert() as MutableList<WordDataDetails>
         notifyDataSetChanged()
     }
 
@@ -46,3 +36,5 @@ class DescriptionWordRvAdapter : RecyclerView.Adapter<DescriptionWordViewHolder>
 
     private fun getItem(position: Int): WordDataDetails = data[position]
 }
+
+class DelegateConverter(converter: WordDataConverter) : WordDataConverter by converter
