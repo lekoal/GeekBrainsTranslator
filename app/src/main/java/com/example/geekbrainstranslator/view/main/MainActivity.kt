@@ -3,7 +3,6 @@ package com.example.geekbrainstranslator.view.main
 import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
@@ -11,7 +10,9 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.geekbrainstranslator.databinding.ActivityMainBinding
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        installSplashScreen()
         setContentView(binding.root)
 
         setSplashScreen()
@@ -38,16 +40,20 @@ class MainActivity : AppCompatActivity() {
     private fun setSplashScreen() {
         var isHideSplashScreen = false
 
+        val scope = CoroutineScope(
+            Dispatchers.IO
+        )
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             setSplashScreenAnimation()
         }
 
-        object : CountDownTimer(1000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {}
-            override fun onFinish() {
-                isHideSplashScreen = true
-            }
-        }.start()
+        scope.launch {
+            delay(1000)
+            isHideSplashScreen = true
+            scope.cancel()
+        }
+
 
         val content: View = findViewById(android.R.id.content)
         content.viewTreeObserver.addOnPreDrawListener(
@@ -74,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 view.height.toFloat()
             )
             slideLeft.interpolator = AnticipateInterpolator()
-            slideLeft.duration = 1000
+            slideLeft.duration = 800
             slideLeft.doOnEnd { view.remove() }
             slideLeft.start()
         }

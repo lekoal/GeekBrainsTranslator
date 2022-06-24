@@ -55,6 +55,8 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation("junit:junit:4.13.2")
 
+    implementation("androidx.core:core-splashscreen:1.0.0-rc01")
+
     //LIFECYCLE
     implementation(Dependencies.LIFECYCLE_LIVEDATA_DEPENDENCY)
     implementation(Dependencies.LIFECYCLE_VIEWMODEL_DEPENDENCY)
