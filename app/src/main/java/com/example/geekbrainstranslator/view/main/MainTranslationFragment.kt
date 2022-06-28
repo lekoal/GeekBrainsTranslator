@@ -10,12 +10,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
 import com.example.geekbrainstranslator.view.description.DescriptionWordFragment
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import com.example.geekbrainstranslator.view.story.SearchStoryWordFragment
+import com.example.utils.InfoWidgetWorker
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.getKoin
 import org.koin.core.qualifier.named
@@ -45,6 +50,7 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     companion object {
         fun newInstance() = MainTranslationFragment()
         const val SCOPE_ID = "mainScope"
+        const val SEARCH_KEY = "last_search"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,6 +115,15 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
                 setSearchSuccess()
                 if (isConnected) {
                     viewModel.onSearch(binding.inputText.text.toString())
+                    val data: Data = Data.Builder()
+                        .putString(SEARCH_KEY, binding.inputText.text.toString())
+                        .build()
+                    val sendWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<InfoWidgetWorker>()
+                        .setInputData(data)
+                        .build()
+                    WorkManager
+                        .getInstance(requireContext())
+                        .enqueue(sendWorkRequest)
                 }
             } else {
                 setSearchError("Введите слово для поиска!")

@@ -5,10 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.example.geekbrainstranslator.di.koinDataBaseDescriptionModule
-import com.example.geekbrainstranslator.di.koinDataBaseFavoriteModule
-import com.example.geekbrainstranslator.di.koinDataBaseHistoryModule
-import com.example.geekbrainstranslator.di.remoteDataSourceModule
+import com.example.geekbrainstranslator.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 

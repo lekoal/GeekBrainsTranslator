@@ -18,8 +18,6 @@ class DescriptionWordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val translation: TextView = itemView.findViewById(R.id.entity_translation)
     private val partOfSpeech: TextView = itemView.findViewById(R.id.entity_part_of_speech_code)
 
-    private val blurEffect = RenderEffect.createBlurEffect(16f, 16f, Shader.TileMode.MIRROR)
-
     fun bind(item: WordDataDetails) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             imageBlur()
@@ -34,6 +32,9 @@ class DescriptionWordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
 
     @RequiresApi(31)
     private fun imageBlur() {
+        val blurEffect = RenderEffect.createBlurEffect(
+            16f, 16f, Shader.TileMode.MIRROR
+        )
         image.setRenderEffect(blurEffect)
     }
 }
