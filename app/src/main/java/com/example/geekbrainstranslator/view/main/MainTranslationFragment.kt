@@ -2,6 +2,7 @@ package com.example.geekbrainstranslator.view.main
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
@@ -10,17 +11,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.example.geekbrainstranslator.R
 import com.example.geekbrainstranslator.app
 import com.example.geekbrainstranslator.databinding.FragmentMainTranslationBinding
 import com.example.geekbrainstranslator.view.description.DescriptionWordFragment
 import com.example.geekbrainstranslator.view.main.viewmodel.MainTranslationViewModel
 import com.example.geekbrainstranslator.view.story.SearchStoryWordFragment
-import com.example.utils.InfoWidgetWorker
+import com.example.utils.InfoWidget
 import com.google.android.material.snackbar.Snackbar
 import org.koin.android.ext.android.getKoin
 import org.koin.core.qualifier.named
@@ -50,7 +47,8 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
     companion object {
         fun newInstance() = MainTranslationFragment()
         const val SCOPE_ID = "mainScope"
-        const val SEARCH_KEY = "last_search"
+        private const val SEARCH_KEY = "last_search"
+        private const val MY_ACTION = "MY_ACTION"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,15 +113,12 @@ class MainTranslationFragment : Fragment(R.layout.fragment_main_translation),
                 setSearchSuccess()
                 if (isConnected) {
                     viewModel.onSearch(binding.inputText.text.toString())
-                    val data: Data = Data.Builder()
-                        .putString(SEARCH_KEY, binding.inputText.text.toString())
-                        .build()
-                    val sendWorkRequest: WorkRequest = OneTimeWorkRequestBuilder<InfoWidgetWorker>()
-                        .setInputData(data)
-                        .build()
-                    WorkManager
-                        .getInstance(requireContext())
-                        .enqueue(sendWorkRequest)
+
+                    val searchToIntent = Intent(context, InfoWidget::class.java).let { intent ->
+                        intent.action = MY_ACTION
+                        intent.putExtra(SEARCH_KEY, binding.inputText.text.toString())
+                    }
+                    context?.sendBroadcast(searchToIntent)
                 }
             } else {
                 setSearchError("Введите слово для поиска!")
