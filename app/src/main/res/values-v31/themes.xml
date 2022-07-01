@@ -1,0 +1,8 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.CustomSplashScreen" parent="Theme.SplashScreen">
+        <item name="postSplashScreenTheme">@style/Theme.GeekBrainsTranslator</item>
+        <item name="android:windowSplashScreenBackground">@color/light_grey</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_translator</item>
+    </style>
+</resources>
